@@ -16,6 +16,22 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>{children}</body>
+      <TopNav />
     </html>
   );
+}
+
+export function TopNav() { 
+  return (
+    <nav>
+      <ul>
+        <li>
+          <a href="/">Home</a>
+        </li>
+        <li>
+          <a href="/about">About</a>
+        </li>
+      </ul>
+    </nav>
+  )
 }
