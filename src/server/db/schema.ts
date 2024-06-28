@@ -24,6 +24,7 @@ export const posts = createTable('posts', {
   name: varchar('name', { length: 256 }).notNull(),
   userId: uuid('user_id').notNull().references(() => users.id),
   content: varchar('content', { length: 1000 }).notNull(), // Defined content as varchar with length 1000
+  pictureUrl: varchar('picture_url', { length: 2048 }), // Field for storing picture URL or path
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }),
 }, (table) => ({
