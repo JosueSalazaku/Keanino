@@ -1,5 +1,6 @@
 import { sql } from 'drizzle-orm';
 import { index, pgTableCreator, serial, timestamp, varchar, uuid, integer, pgEnum, uniqueIndex, } from 'drizzle-orm/pg-core';
+
 import * as types from '../../types';
 
 const UserRole = pgEnum('userRole', ['user', 'Admin']);
