@@ -18,3 +18,38 @@ export interface User {
     password: string;
     role: 'user' | 'Admin';
 }
+
+export interface Comment {
+  id: number;
+  postId: number;
+  userId: string;
+  content: string;
+  createdAt: Date;
+}
+
+export interface Tag {
+  id: number;
+  name: string;
+}
+
+export interface PostTag {
+  postId: number;
+  tagId: number;
+}
+
+export interface Like {
+  postId: number;
+  userId: string;
+  createdAt: Date;
+}
+
+export interface Like {
+  postId: number;
+  userId: string;
+  createdAt: Date;
+}
+
+export interface Follower {
+  followerId: string;
+  followingId: string;
+}
