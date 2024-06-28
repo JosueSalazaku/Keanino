@@ -32,3 +32,44 @@ export const posts = createTable('posts', {
   userIndex: index('user_idx').on(table.userId),
 }));
 
+export const comments = createTable('comments', {
+  id: serial('id').primaryKey(),
+  postId: uuid('post_id').notNull().references(() => posts.id),
+  userId: uuid('user_id').notNull().references(() => users.id),
+  content: varchar('content', { length: 1000 }).notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
+});
+
+export const tags = createTable('tags', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 100 }).notNull().unique(),
+});
+
+export const postTags = createTable('post_tags', {
+  postId: uuid('post_id').notNull().references(() => posts.id),
+  tagId: integer('tag_id').notNull().references(() => tags.id),
+}, (table) => ({
+  postTagIndex: uniqueIndex('post_tag_index').on(table.postId, table.tagId),
+}));
+
+export const likes = createTable('likes', {
+  postId: uuid('post_id').notNull().references(() => posts.id),
+  userId: uuid('user_id').notNull().references(() => users.id),
+  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
+}, (table) => ({
+  likeIndex: uniqueIndex('like_index').on(table.postId, table.userId),
+}));
+
+export const followers = createTable('followers', {
+  followerId: uuid('follower_id').notNull().references(() => users.id),
+  followingId: uuid('following_id').notNull().references(() => users.id),
+}, (table) => ({
+  followIndex: uniqueIndex('follow_index').on(table.followerId, table.followingId),
+}));
+
+export const media = createTable('media', {
+  id: serial('id').primaryKey(),
+  postId: uuid('post_id').notNull().references(() => posts.id),
+  url: varchar('url', { length: 2048 }).notNull(),
+  mediaType: varchar('media_type', { length: 50 }).notNull(), // e.g., 'image', 'video'
+});
