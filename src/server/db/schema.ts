@@ -1,10 +1,9 @@
 import { sql } from 'drizzle-orm';
-import { index, pgTableCreator, serial, timestamp, varchar, uuid, integer, pgEnum, uniqueIndex, } from 'drizzle-orm/pg-core';
+import { index, pgTableCreator, serial, timestamp, varchar, uuid, integer, uniqueIndex } from 'drizzle-orm/pg-core';
 
 import * as types from '../../types';
 
-const UserRole = pgEnum('userRole', ['user', 'Admin']);
-const createTable = pgTableCreator((name) => `kelly-blog_${name}`);
+const createTable = pgTableCreator((name) => `${name}`);
 
 export const users = createTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -14,19 +13,19 @@ export const users = createTable('users', {
   age: integer('age').notNull(),
   email: varchar('email', { length: 255 }).notNull().unique(),
   password: varchar('password', { length: 255 }).notNull(),
-  role: UserRole('userRole').default('user').notNull(),
+  role: varchar('role', { length: 50 }).default('user').notNull(),
 }, (table) => ({
   emailIndex: uniqueIndex('emailIndex').on(table.email),
 }));
 
 export const posts = createTable('posts', {
-  id: serial('id').primaryKey(),
+  id: uuid('id').primaryKey().defaultRandom(), // Changed to uuid
   name: varchar('name', { length: 256 }).notNull(),
   userId: uuid('user_id').notNull().references(() => users.id),
-  content: varchar('content', { length: 1000 }).notNull(), // Defined content as varchar with length 1000
-  pictureUrl: varchar('picture_url', { length: 2048 }), // Field for storing picture URL or path
+  content: varchar('content', { length: 1000 }).notNull(),
+  pictureUrl: varchar('picture_url', { length: 2048 }),
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
-  updatedAt: timestamp('updated_at', { withTimezone: true }),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
 }, (table) => ({
   nameIndex: index('name_idx').on(table.name),
   userIndex: index('user_idx').on(table.userId),
@@ -34,7 +33,7 @@ export const posts = createTable('posts', {
 
 export const comments = createTable('comments', {
   id: serial('id').primaryKey(),
-  postId: uuid('post_id').notNull().references(() => posts.id),
+  postId: uuid('post_id').notNull().references(() => posts.id), // Ensure this is uuid
   userId: uuid('user_id').notNull().references(() => users.id),
   content: varchar('content', { length: 1000 }).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
@@ -71,5 +70,5 @@ export const media = createTable('media', {
   id: serial('id').primaryKey(),
   postId: uuid('post_id').notNull().references(() => posts.id),
   url: varchar('url', { length: 2048 }).notNull(),
-  mediaType: varchar('media_type', { length: 50 }).notNull(), // e.g., 'image', 'video'
+  mediaType: varchar('media_type', { length: 50 }).notNull(),
 });

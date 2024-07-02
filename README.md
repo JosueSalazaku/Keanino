@@ -4,8 +4,8 @@
 ## Development Todo
 
 - [x] Make it deploy
-- [ ] Scaffold basic ui
-- [ ] setup database (supabase)
+- [x] Scaffold basic ui
+- [x] setup database (supabase)
 - [ ] Attach database to ui
 - [ ] Add authentications (clerk)
 - [ ] image upload
