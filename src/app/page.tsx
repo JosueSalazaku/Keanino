@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SignedOut, SignedIn } from '@clerk/nextjs';
 
 const mockUrls = [ 
   "https://utfs.io/f/c78ebaa8-bbd2-4b03-97b4-5f7ab2829244-wop9s9.28.26.png",
@@ -13,17 +14,32 @@ const mockImg = mockUrls.map((url, index) => ({
     url,
 }));
 
+function Images() {
+  return (
+    <div className="flex flex-wrap gap-4">
+    {mockImg.map((img) => (
+      <div key={img.id} className="m-2">
+  
+        <img src={img.url} alt="mock image" className="w-48" /> {/* Ensure that 'Image' is a valid JSX element type */}
+      </div>
+    ))}
+  </div>
+  );
+}
+
 export default function HomePage() {
   return (
+
     <main className="flex min-h-screen flex-col items-center justify-start pt-12 bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="flex flex-wrap gap-4">
-        {mockImg.map((img) => (
-          <div key={img.id} className="m-2">
-      
-            <img src={img.url} alt="mock image" className="w-48" /> {/* Ensure that 'Image' is a valid JSX element type */}
-          </div>
-        ))}
-      </div>
+      <SignedOut>
+        <div>
+          Please sign in to view this page
+        </div>
+      </SignedOut>
+      <SignedIn>
+        <Images />
+      </SignedIn>
+
       Blog In progress
     </main>
   );
