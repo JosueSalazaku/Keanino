@@ -1,3 +1,4 @@
+import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import "~/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
@@ -14,10 +15,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    <ClerkProvider>
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>{children}</body>
 
-    </html>
+      </html>
+    </ClerkProvider>
   );
 }
 
