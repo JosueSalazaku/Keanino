@@ -4,8 +4,8 @@ import { SignedOut, SignInButton, SignedIn, UserButton } from '@clerk/nextjs'
 
 export function TopNav() {
   return (
-    <nav className='flex w-full items-center justify-between border'>
-          <div>Kelly's Blog</div>
+    <nav className='flex w-full h-20 px-5 items-center justify-between border'>
+          <div className='text-2xl font-bold'>Kelly's Blog</div>
           <div>
               <SignedOut>
                 <SignInButton />
@@ -18,3 +18,4 @@ export function TopNav() {
   )
 }
 
+export default TopNav
