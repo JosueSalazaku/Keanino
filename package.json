@@ -14,7 +14,9 @@
     "start": "next start"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.0.0-beta.46",
+    "@clerk/clerk-sdk-node": "^5.0.14",
+    "@clerk/nextjs": "^5.2.2",
+    "@supabase/supabase-js": "^2.44.2",
     "@t3-oss/env-nextjs": "^0.10.1",
     "drizzle-orm": "^0.30.10",
     "geist": "^1.3.0",
