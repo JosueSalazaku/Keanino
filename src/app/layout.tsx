@@ -4,7 +4,7 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 
 export const metadata = {
-  title: "Kelly's Blog",
+  title: "Keanino",
   description: "A bout love, art and Poetry",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };

@@ -5,7 +5,7 @@ import { SignedOut, SignedIn } from '@clerk/nextjs';
 export default function HomePage() {
   return (
 
-    <main className="flex min-h-screen flex-col items-center justify-start pt-12 bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+    <main className="flex min-h-screen flex-col items-center justify-start pt-12 bg-black text-white">
       <SignedOut>
         <div>
           Please sign in to view this page
