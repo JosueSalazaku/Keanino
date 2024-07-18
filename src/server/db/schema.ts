@@ -1,8 +1,6 @@
 import { sql } from 'drizzle-orm';
 import { index, pgTableCreator, serial, timestamp, varchar, uuid, integer, uniqueIndex } from 'drizzle-orm/pg-core';
 
-import * as types from '../../types';
-
 const createTable = pgTableCreator((name) => `${name}`);
 
 export const users = createTable('users', {
