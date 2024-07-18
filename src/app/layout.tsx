@@ -1,7 +1,6 @@
 import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { TopNav } from "~/app/_components/TopNav";
 import "~/styles/globals.css";
-import { GeistSans } from "geist/font/sans";
 
 export const metadata = {
   title: "Keanino",
@@ -16,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${GeistSans.variable}`}>
+      <html lang="en">
           <body>
             <TopNav />
             {children}
