@@ -29,7 +29,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div>page</div>
+    <div>Login</div>
   )
 }
 
