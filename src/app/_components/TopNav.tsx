@@ -22,6 +22,7 @@ export function TopNav() {
           <Link href="/People">People</Link>
           <Link href="/Places">Places</Link>
           <Link href="/Pages">Pages</Link>
+          
         </section>
       </div>
     </nav>

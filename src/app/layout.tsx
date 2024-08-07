@@ -1,4 +1,6 @@
 import { TopNav } from "~/app/_components/TopNav";
+import { ThemeProvider } from './../components/theme-provider';
+
 import "~/styles/globals.css";
 
 export const metadata = {
@@ -14,9 +16,16 @@ export default function RootLayout({
 }) {
   return (
       <html lang="en">
-          <body>
+      <body>
+      <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
             <TopNav />
-            {children}
+          {children}
+          </ThemeProvider>
           </body>
       </html>
 
