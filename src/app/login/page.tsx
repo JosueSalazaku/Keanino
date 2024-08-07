@@ -33,7 +33,7 @@
 //   )
 // }
 
-import { login, signup } from './actions'
+import { login, signup } from '../login/actions'
 
 export default function LoginPage() {
   return (
