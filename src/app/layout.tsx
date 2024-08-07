@@ -1,4 +1,3 @@
-import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { TopNav } from "~/app/_components/TopNav";
 import "~/styles/globals.css";
 
@@ -14,14 +13,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
       <html lang="en">
           <body>
             <TopNav />
             {children}
           </body>
       </html>
-    </ClerkProvider>
+
   );
 }
 
