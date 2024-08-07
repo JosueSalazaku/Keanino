@@ -1,9 +1,19 @@
-import React from "react";
+"use client"
+
+import React, { useState } from "react";
 import Link from "next/link";
 
+
 export function TopNav() {
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => {
+    setIsOpen(!isOpen);
+  }
+
   return (
-    <nav className="flex h-20 w-full items-center justify-between bg-primary px-5">
+    <nav className="flex h-20 w-full items-center justify-between bg-primary px-14">
       <Link href="/" className="font-didot text-2xl font-bold text-main">
         Keanino
       </Link>
