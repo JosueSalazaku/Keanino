@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { Input } from '~/components/ui/input'
+import { Button } from '~/components/ui/button'
 
 export default function Signup() {
   const [email, setEmail] = useState('')
@@ -21,28 +23,41 @@ export default function Signup() {
 
     if (res.redirected) {
       router.push(res.url)
+    } else {
+      interface ResponseData {
+        error: string | null;
+        // Add other properties if necessary
+      }
+      
+      const result: ResponseData = await res.json() as ResponseData;
+      if (result.error) {
+        console.error(result.error)
+        // Optionally show an error message to the user
+      }
     }
   }
 
   return (
-    <div>
+    <div className='flex flex-col justify-center items-center pt-10 gap-12'>
       <h1>Signup</h1>
-      <form onSubmit={handleSignup}>
-        <input
+      <form onSubmit={handleSignup} className='flex flex-col justify-between items-center gap-7'>
+        <Input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           required
+          className='w-[350px] gap-4'
         />
-        <input
+        <Input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           required
+          className='w-[350px] gap-4'
         />
-        <button type="submit">Sign Up</button>
+        <Button type="submit">Sign Up</Button>
       </form>
     </div>
   )
