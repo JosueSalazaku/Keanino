@@ -1,4 +1,4 @@
-import { loginAction, signupAction } from "../api/services/auth/actions";
+import { loginAction, signupAction } from "../../api/services/auth/actions";
 
 export default function login() {
   return (

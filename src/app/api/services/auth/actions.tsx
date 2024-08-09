@@ -3,9 +3,9 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { createClient } from "../../../util/supabase/supabaseServer";
+import { createClient } from "../../../../../util/supabase/supabaseServer";
 
-export async function login(formData: FormData) {
+export async function loginAction(formData: FormData) {
   const supabase = createClient();
 
   // type-casting here for convenience
@@ -25,7 +25,7 @@ export async function login(formData: FormData) {
   redirect("/");
 }
 
-export async function signup(formData: FormData) {
+export async function signupAction(formData: FormData) {
   const supabase = createClient();
 
   // type-casting here for convenience
