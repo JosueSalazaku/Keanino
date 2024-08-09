@@ -4,25 +4,25 @@ import { loginAction, signupAction } from "../api/services/auth/actions";
 import { useRouter } from "next/router";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const router = useRouter();
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const router = useRouter()
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     const res = await fetch('/api/services/auth/login', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password })
-    });
+      body: JSON.stringify({ email, password }),
+    })
 
     if (res.redirected) {
-      await router.push(res.url);
+      await router.push(res.url)
     }
-  };
+  }
 
   return (
     <div>
@@ -45,5 +45,5 @@ export default function Login() {
         <button type="submit">Login</button>
       </form>
     </div>
-  );
+  )
 }

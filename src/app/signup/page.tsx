@@ -1,6 +1,7 @@
 "use client"
+
 import { useState } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 export default function Signup() {
   const [email, setEmail] = useState('')
@@ -19,7 +20,7 @@ export default function Signup() {
     })
 
     if (res.redirected) {
-     await router.push(res.url)
+      router.push(res.url)
     }
   }
 
