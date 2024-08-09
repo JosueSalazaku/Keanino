@@ -33,7 +33,7 @@
 //   )
 // }
 
-import { login, signup } from "../api/services/auth/actions";
+import { login, signup } from "../auth/actions";
 
 export default function LoginPage() {
   return (
