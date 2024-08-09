@@ -33,18 +33,29 @@
 //   )
 // }
 
-import { login, signup } from '../login/actions'
+import { login, signup } from "../api/services/auth/actions";
 
 export default function LoginPage() {
   return (
-    <form className='flex flex-col font-didot text-2xl items-center mt-5'>
+    <form className="mt-5 flex flex-col items-center font-didot text-2xl">
       <label htmlFor="email">Email:</label>
-      <input id="email" name="email" type="email" required className='border-2 border-primary rounded-l' />
+      <input
+        id="email"
+        name="email"
+        type="email"
+        required
+        className="rounded-l border-2 border-primary"
+      />
       <label htmlFor="password">Password:</label>
-      <input id="password" name="password" type="password" required className='border-2 border-primary rounded-l' />
+      <input
+        id="password"
+        name="password"
+        type="password"
+        required
+        className="rounded-l border-2 border-primary"
+      />
       <button formAction={login}>Log in</button>
       <button formAction={signup}>Sign up</button>
     </form>
-  )
+  );
 }
-
