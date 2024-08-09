@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
+"use client"
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
@@ -10,17 +10,16 @@ export default function Signup() {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const formData = new FormData()
-    formData.append('email', email)
-    formData.append('password', password)
-
-    const res = await fetch('/api/auth/signup', {
+    const res = await fetch('/api/services/auth/signup', {
       method: 'POST',
-      body: formData,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
     })
 
     if (res.redirected) {
-      router.push(res.url)
+     await router.push(res.url)
     }
   }
 
