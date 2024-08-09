@@ -1,7 +1,7 @@
 "use client"
-import { useState } from "react";
-import { loginAction, signupAction } from "../api/services/auth/actions";
-import { useRouter } from "next/router";
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -20,7 +20,7 @@ export default function Login() {
     })
 
     if (res.redirected) {
-      await router.push(res.url)
+      router.push(res.url)
     }
   }
 
