@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-import { loginAction, signupAction } from "../../api/services/auth/actions";
+import { loginAction, signupAction } from "../api/services/auth/actions";
 import { useRouter } from "next/router";
 
 export default function Login() {
