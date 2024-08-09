@@ -1,13 +1,9 @@
 "use client"
-
 import React, { useState } from "react";
 import Link from "next/link";
 
-
 export function TopNav() {
-
   const [isOpen, setIsOpen] = useState(false);
-
   const toggle = () => {
     setIsOpen(!isOpen);
   }
@@ -22,6 +18,8 @@ export function TopNav() {
           <Link href="/People">People</Link>
           <Link href="/Places">Places</Link>
           <Link href="/Pages">Pages</Link>
+          <Link href="/signin"><button>Sign In</button></Link>
+          <Link href="/login"><button>Log In</button></Link>
         </section>
       </div>
     </nav>
