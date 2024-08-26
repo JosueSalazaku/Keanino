@@ -1,13 +1,17 @@
+
 import { drizzle } from 'drizzle-orm/postgres-js'
 import postgres from 'postgres'
-import { posts } from './schema'
-import { Post } from '~/types'
+import { users, posts } from './schema'
 
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+  throw new Error('DATABASE_URL is not defined');
+}
 
-
-const connectionString = process.env.DATABASE_URL ?? ''
-const client = postgres(connectionString)
+// Disable prefetch as it is not supported for "Transaction" pool mode
+const client = postgres(connectionString, { prepare: false });
 const db = drizzle(client);
 
-
+const allUsers = await db.select().from(users);
 const allPosts = await db.select().from(posts);
+        

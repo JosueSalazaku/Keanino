@@ -1,41 +1,55 @@
-"use client"
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Input } from '~/components/ui/input'
-import { Button } from '~/components/ui/button'
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Input } from '~/components/ui/input';
+import { Button } from '~/components/ui/button';
 
 export default function Signup() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const router = useRouter()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    const res = await fetch('/api/services/auth/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    })
-
-    if (res.redirected) {
-      router.push(res.url)
-    } else {
-      interface ResponseData {
-        error: string | null;
-        // Add other properties if necessary
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+  
+    try {
+      const payload = { email, password };
+      console.log('Sending payload:', payload);
+  
+      const res = await fetch('/api/services/auth/signup/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+  
+      if (res.redirected) {
+        router.push(res.url);
+      } else {
+        const result: { error?: string } = await res.json();
+        console.log('Response received:', result);
+  
+        if (result.error) {
+          setError(result.error);
+        } else {
+          // Optionally, you can handle success
+        }
       }
-      
-      const result: ResponseData = await res.json() as ResponseData;
-      if (result.error) {
-        console.error(result.error)
-        // Optionally show an error message to the user
-      }
+    } catch (err) {
+      console.error('Signup error:', err);
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setLoading(false);
     }
-  }
+  };
+  
 
   return (
     <div className='flex flex-col justify-center items-center pt-10 gap-12'>
@@ -57,8 +71,11 @@ export default function Signup() {
           required
           className='w-[350px] gap-4'
         />
-        <Button type="submit">Sign Up</Button>
+        {error && <div className="text-red-500">{error}</div>}
+        <Button type="submit" disabled={loading}>
+          {loading ? 'Signing Up...' : 'Sign Up'}
+        </Button>
       </form>
     </div>
-  )
+  );
 }

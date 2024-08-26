@@ -1,4 +1,4 @@
-import { loginAction } from '../../services/auth/actions'
+import { loginAction } from '../actions'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

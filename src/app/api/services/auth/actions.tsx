@@ -8,22 +8,23 @@ type AuthActionResult = {
   error?: {
     message: string;
   };
-  data?: FormData;
+  data?: {
+    email: string;
+    password: string;
+  };
 };
 
 export async function loginAction(formData: FormData): Promise<AuthActionResult> {
   const supabase = createClient();
 
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
+  const email = formData.get("email") as string | null;
+  const password = formData.get("password") as string | null;
 
-  if (!data.email || !data.password) {
-    return { error: { message: 'Email and password are required' } }
+  if (!email || !password) {
+    return { error: { message: 'Email and password are required' } };
   }
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
     return { error };
@@ -31,26 +32,27 @@ export async function loginAction(formData: FormData): Promise<AuthActionResult>
 
   revalidatePath("/", "layout");
   redirect("/");
+  return {};  // Return an empty object to indicate success, although redirect will generally prevent further execution
 }
 
-export async function signupAction(formData: FormData): Promise<AuthActionResult> {
+export async function signupAction(data: { email: string; password: string }): Promise<AuthActionResult> {
   const supabase = createClient();
 
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
-
   if (!data.email || !data.password) {
-    return { error: { message: 'Email and password are required' } }
+    return { error: { message: 'Email and password are required' } };
   }
 
-  const { error } = await supabase.auth.signUp(data);
+  const { error } = await supabase.auth.signUp({
+    email: data.email,
+    password: data.password,
+  });
 
   if (error) {
     return { error };
   }
 
+  // Revalidate path and redirect
   revalidatePath("/", "layout");
   redirect("/");
+  return {};  // Return an empty object to indicate success
 }

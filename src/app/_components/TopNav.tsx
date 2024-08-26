@@ -16,9 +16,9 @@ export function TopNav() {
         Keanino
       </Link>
       <button onClick={toggle} className="md:hidden">
-        {isOpen ? <IoMdClose className="size-8" /> : <GiHamburgerMenu className="size-8" />}
+      {isOpen ? <IoMdClose className="size-8 text-white" /> : <GiHamburgerMenu className="size-8 text-white" />}
       </button>
-      <div className="hidden md:flex flex-row items-center space-x-6">
+      <div className="hidden md:flex flex-row items-center text-white space-x-6">
         <Link href="/People">People</Link>
         <Link href="/Places">Places</Link>
         <Link href="/Pages">Pages</Link>
