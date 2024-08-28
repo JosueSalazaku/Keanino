@@ -1,6 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { createClient } from "util/supabase/supabaseServer";
+import createClient  from "util/supabase/supabaseClient";
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { AuthError } from '@supabase/supabase-js';
 
@@ -15,7 +15,7 @@ type AuthActionResult = {
 };
 
 export async function loginAction(formData: FormData): Promise<AuthActionResult> {
-  const supabase: SupabaseClient = await createClient();
+  const supabase: SupabaseClient =  createClient();
 
   const email = formData.get("email") as string | null;
   const password = formData.get("password") as string | null;
@@ -36,7 +36,7 @@ export async function loginAction(formData: FormData): Promise<AuthActionResult>
 }
 
 export async function signupAction(data: { email: string; password: string }): Promise<AuthActionResult> {
-  const supabase: SupabaseClient = await createClient();
+  const supabase: SupabaseClient =  createClient();
 
   if (!data.email || !data.password) {
     return { error: { message: 'Email and password are required' } };
@@ -51,13 +51,13 @@ export async function signupAction(data: { email: string; password: string }): P
     return { error: { message: error.message } };
   }
 
-  revalidatePath("/");
+  revalidatePath("/People");
 
   return {};  // Return an empty object to indicate success
 }
 
 export  async function logoutAction() {
-  const supabase: SupabaseClient = await createClient();
+  const supabase: SupabaseClient =  createClient();
   const { error }: { error: AuthError | null } = await supabase.auth.signOut();
   
   if (error) {
@@ -70,7 +70,7 @@ export  async function logoutAction() {
 }
 
 export default async function signInWithGoogle() { 
-  const supabase: SupabaseClient = await createClient();
+  const supabase: SupabaseClient =  createClient();
   const { error }: { error: AuthError | null } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
