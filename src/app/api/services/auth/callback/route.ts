@@ -2,6 +2,8 @@ import {createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server';
 
+// This route handles the OAuth callback for Supabase authentication, exchanging the code for a user session.
+
 
 export async function GET(request: NextRequest) {
     const requestUrl = new URL(request.url);

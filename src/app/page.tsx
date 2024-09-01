@@ -1,16 +1,17 @@
-import Link from "next/link";
+"use client"
 
 export default function HomePage() {
-  return (
 
+  return (
     <main className="flex min-h-screen flex-col items-center justify-start pt-12 bg-primary text-white">
-        <section className="">
-          
-        </section>
-        <section>
-          
-        </section>
-        The 3 P
+      <section className="">
+        
+      </section>
+      <section>
+        
+      </section>
+      The 3 P
     </main>
   );
 }
+

@@ -1,5 +1,5 @@
 import { TopNav } from "~/app/_components/TopNav";
-import { ThemeProvider } from './../components/theme-provider';
+import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 import "~/styles/globals.css";
 
@@ -15,20 +15,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    <ClerkProvider>
       <html lang="en">
-      <body>
-      <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+        <body>
+          
             <TopNav />
           {children}
-          </ThemeProvider>
           </body>
       </html>
-
+      </ClerkProvider>
   );
 }
 
