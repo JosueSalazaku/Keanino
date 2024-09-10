@@ -1,5 +1,5 @@
 import { TopNav } from "~/app/_components/TopNav";
-import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs'
 
 import "~/styles/globals.css";
 
