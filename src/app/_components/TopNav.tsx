@@ -1,15 +1,13 @@
-"use client";
-import React, { useState } from "react";
-import Link from "next/link";
-import { IoMdClose } from "react-icons/io";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { SignedOut, SignedIn, SignInButton, UserButton } from "@clerk/nextjs";
+"use client"
+
+import { useState } from 'react';
+import { SignedIn, SignedOut, UserButton, useAuth } from '@clerk/nextjs';
+import Link from 'next/link';
 
 export function TopNav() {
   const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggle = () => setIsOpen(!isOpen);
+  const { signOut } = useAuth();
 
   return (
     <nav className="flex h-20 w-full items-center justify-between bg-primary px-14">
@@ -17,36 +15,36 @@ export function TopNav() {
         Keanino
       </Link>
       <button onClick={toggle} className="md:hidden">
-        {isOpen ? <IoMdClose className="size-8 text-white" /> : <GiHamburgerMenu className="size-8 text-white" />}
+        {isOpen ? 'Close' : 'Menu'}
       </button>
       <div className="hidden md:flex flex-row items-center text-white space-x-6">
-        <Link href="/People">People</Link>
-        <Link href="/Places">Places</Link>
-        <Link href="/Pages">Pages</Link>
-        <SignedOut>
-          <SignInButton mode="modal">
-            <button>Login</button>
-          </SignInButton>
-        </SignedOut>
         <SignedIn>
-          <UserButton />
-        </SignedIn>
-      </div>
-
-      {/* Sliding Menu for Small Screens */}
-      {isOpen && (
-        <div className="absolute top-20 left-0 right-0 z-50 bg-orange-400 p-5 flex flex-col text-6xl space-y-10 text-main md:hidden">
           <Link href="/People">People</Link>
           <Link href="/Places">Places</Link>
           <Link href="/Pages">Pages</Link>
-          <SignedOut>
-            <SignInButton mode="modal">
-              <button>Login</button>
-            </SignInButton>
-          </SignedOut>
+          <UserButton />
+          <button onClick={() => signOut()}>Sign Out</button>
+        </SignedIn>
+        <SignedOut>
+          <Link href="/sign-in"><button>Sign In</button></Link>
+          <Link href="/sign-up"><button>Sign Up</button></Link>
+        </SignedOut>
+      </div>
+
+      {/* Small screen */}
+      {isOpen && (
+        <div className="absolute top-20 left-0 right-0 z-50 bg-orange-400 p-5 flex flex-col text-6xl space-y-10 text-main md:hidden">
           <SignedIn>
+            <Link href="/People">People</Link>
+            <Link href="/Places">Places</Link>
+            <Link href="/Pages">Pages</Link>
             <UserButton />
+            <button onClick={() => signOut()}>Sign Out</button>
           </SignedIn>
+          <SignedOut>
+            <Link href="/sign-in"><button>Sign In</button></Link>
+            <Link href="/sign-up"><button>Sign Up</button></Link>
+          </SignedOut>
         </div>
       )}
     </nav>

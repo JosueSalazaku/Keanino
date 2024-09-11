@@ -1,5 +1,5 @@
 import { TopNav } from "~/app/_components/TopNav";
-import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs'
 
 import "~/styles/globals.css";
 
@@ -17,10 +17,11 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body>
-          
+        <body className="bg-main">
+          <div className="max-w-600 mx-auto h-[100vh]">
             <TopNav />
-          {children}
+            {children}
+          </div>
           </body>
       </html>
       </ClerkProvider>

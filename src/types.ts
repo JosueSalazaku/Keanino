@@ -1,5 +1,3 @@
-// create a user interface
-
 export interface Post {
   id: number;
   name: string;
@@ -11,10 +9,12 @@ export interface Post {
 export interface User { 
     id: string;
     name: string;
-    surname: string;
+    firstName: string;
     username: string;
     age: number;
     email: string;
+    clerkId: string;
+    picture: string;
     password: string;
     role: 'user' | 'Admin';
 }
