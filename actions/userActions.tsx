@@ -21,9 +21,11 @@ export const addUser = async () => {
     try {
         await db.insert(users).values({
             name: "user1",
-            email: "feminop843@ploncy.com",
-            surname: "surname1",
+            firstName: "user1",
             username: "username1",
+            email: "feminop843@ploncy.com",
+            clerkId: "",
+            picture: "",
             age: 0,
             password: "password1"
         })

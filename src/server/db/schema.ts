@@ -1,15 +1,18 @@
 import { sql } from 'drizzle-orm';
-import { index, pgTableCreator, serial, timestamp, varchar, uuid, integer, uniqueIndex } from 'drizzle-orm/pg-core';
+import { index, pgTableCreator, serial, timestamp, varchar, uuid, integer, uniqueIndex, text } from 'drizzle-orm/pg-core';
+// import * as types from '../../types';
 
 const createTable = pgTableCreator((name) => `${name}`);
 
 export const users = createTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: varchar('name', { length: 255 }).notNull(),
-  surname: varchar('surname', { length: 255 }).notNull(),
+  firstName: varchar('firstName', { length: 255 }).notNull(),
   username: varchar('username', { length: 255 }).notNull().unique(),
   age: integer('age').notNull(),
   email: varchar('email', { length: 255 }).notNull().unique(),
+  clerkId: text('clerkId').notNull(),
+  picture: text('picture').notNull(),
   password: varchar('password', { length: 255 }).notNull(),
   role: varchar('role', { length: 50 }).default('user').notNull(),
 }, (table) => ({
