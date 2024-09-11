@@ -1,12 +1,13 @@
 "use client"
 
 import { useState } from 'react';
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut, UserButton, useAuth } from '@clerk/nextjs';
 import Link from 'next/link';
 
 export function TopNav() {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const { signOut } = useAuth();
 
   return (
     <nav className="flex h-20 w-full items-center justify-between bg-primary px-14">
@@ -22,6 +23,7 @@ export function TopNav() {
           <Link href="/Places">Places</Link>
           <Link href="/Pages">Pages</Link>
           <UserButton />
+          <button onClick={() => signOut()}>Sign Out</button>
         </SignedIn>
         <SignedOut>
           <Link href="/sign-in"><button>Sign In</button></Link>
@@ -37,6 +39,7 @@ export function TopNav() {
             <Link href="/Places">Places</Link>
             <Link href="/Pages">Pages</Link>
             <UserButton />
+            <button onClick={() => signOut()}>Sign Out</button>
           </SignedIn>
           <SignedOut>
             <Link href="/sign-in"><button>Sign In</button></Link>

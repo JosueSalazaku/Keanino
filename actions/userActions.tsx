@@ -33,10 +33,10 @@ export const addUser = async () => {
     revalidatePath("/")
 }
 
-export const getUser = async (userId: number) => {
-    try {
+// export const getUser = async (userId: number) => {
+//     try {
 
-    } catch (error) {
+//     } catch (error) {
         
-    }
-}
+//     }
+// }
