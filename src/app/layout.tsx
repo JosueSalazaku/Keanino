@@ -18,9 +18,10 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body>
-          
+          <div className="max-w-600 mx-auto h-[100vh]">
             <TopNav />
-          {children}
+            {children}
+          </div>
           </body>
       </html>
       </ClerkProvider>

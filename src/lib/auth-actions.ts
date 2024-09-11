@@ -150,4 +150,3 @@
 //   redirect("/");
 // }
 
-import {db} from "../server/db/index"

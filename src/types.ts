@@ -1,5 +1,3 @@
-// create a user interface
-
 export interface Post {
   id: number;
   name: string;
