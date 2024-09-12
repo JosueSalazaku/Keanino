@@ -10,5 +10,5 @@ export default clerkMiddleware((auth, request) => {
 
 export const config = {
   matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
-  publicRoute: ['/login', '/sign-up', '/forgot-password', '/reset-password']
+  publicRoute: ['/sign-in', '/sign-up', '/forgot-password', '/reset-password']
 }

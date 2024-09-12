@@ -30,7 +30,7 @@ export const addUser = async (user: User) => {
             clerkId: user?.clerkId,
             picture: user?.picture,
         })
-            // .returning({ clerkClienId: user?.clerkId });
+            .returning({ clerkClientId: users.clerkId });
     } catch (error) {
         console.error('Error adding new User!')
     }
