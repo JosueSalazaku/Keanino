@@ -33,6 +33,7 @@ export const comments = createTable('comments', {
   id: serial('id').primaryKey(),
   postId: uuid('post_id').notNull().references(() => posts.id), // Ensure this is uuid
   userId: uuid('user_id').notNull().references(() => users.id),
+  name: varchar('name', { length: 255 }).notNull(),
   content: varchar('content', { length: 1000 }).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
 });

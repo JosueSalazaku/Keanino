@@ -20,7 +20,7 @@ export const getAllUsers = async () => {
 
 }
 
-export const addUser = async (user: any) => {
+export const addUser = async (user: User) => {
     try {
         await db.insert(users).values({
             name: user?.name,
@@ -30,7 +30,7 @@ export const addUser = async (user: any) => {
             clerkId: user?.clerkId,
             picture: user?.picture,
         })
-            .returning({ clerkClienId: user?.clerkId });
+            // .returning({ clerkClienId: user?.clerkId });
     } catch (error) {
         console.error('Error adding new User!')
     }
