@@ -1,5 +1,5 @@
-import { TopNav } from "~/app/_components/TopNav";
 import { ClerkProvider } from '@clerk/nextjs'
+import { TopNav } from "~/app/_components/TopNav";
 
 import "~/styles/globals.css";
 

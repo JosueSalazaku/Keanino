@@ -1,6 +1,6 @@
 {
-  "id": "b2b55e0c-a4db-4b68-97a4-8d169eb0b44b",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "a8fa4b63-c623-42cd-9198-8daf0c770c8e",
+  "prevId": "3e32a1bd-b3fe-4692-9d85-d8955595b45d",
   "version": "6",
   "dialect": "postgresql",
   "tables": {
@@ -253,6 +253,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
         "tag_id": {
           "name": "tag_id",
           "type": "integer",
@@ -277,6 +283,19 @@
           "tableTo": "posts",
           "columnsFrom": [
             "post_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "post_tags_user_id_users_id_fk": {
+          "name": "post_tags_user_id_users_id_fk",
+          "tableFrom": "post_tags",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
           ],
           "columnsTo": [
             "id"
@@ -432,8 +451,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "surname": {
-          "name": "surname",
+        "firstName": {
+          "name": "firstName",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
@@ -444,15 +463,15 @@
           "primaryKey": false,
           "notNull": true
         },
-        "age": {
-          "name": "age",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
         "email": {
           "name": "email",
           "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "clerkId": {
+          "name": "clerkId",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -468,6 +487,12 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'user'"
+        },
+        "picture": {
+          "name": "picture",
+          "type": "varchar(2048)",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {
