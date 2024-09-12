@@ -13,12 +13,10 @@ export interface User {
     name: string;
     firstName: string;
     username: string;
-    age: number;
     email: string;
     clerkId: string;
-    password: string;
     picture: string;
-    role: 'user' | 'Admin';
+    // role: 'user' | 'Admin';
 }
 
 export interface Comment {

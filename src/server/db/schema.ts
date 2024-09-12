@@ -10,7 +10,7 @@ export const users = createTable('users', {
   username: varchar('username', { length: 255 }).notNull().unique(),
   email: varchar('email', { length: 255 }).notNull().unique(),
   clerkId: text('clerkId').notNull(),
-  password: varchar('password', { length: 255 }).notNull(),
+  // password: varchar('password', { length: 255 }).notNull(),
   role: varchar('role', { length: 50 }).default('user').notNull(),
   picture: varchar('picture', { length: 2048 }),
 }, (table) => ({

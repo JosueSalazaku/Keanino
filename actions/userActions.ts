@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
 
 import { db } from "../src/server/db/index"
@@ -5,6 +8,7 @@ import { revalidatePath } from "next/cache"
 import { eq } from "drizzle-orm"
 import { users } from "../src/server/db/schema";
 import type { User } from "../src/types"
+import { clerkClient } from "@clerk/nextjs/server";
 
 export const getAllUsers = async () => {
     try {
@@ -17,7 +21,7 @@ export const getAllUsers = async () => {
 
 }
 
-export const addUser = async (user: User) => {
+export const addUser = async (user: any) => {
     try {
         await db.insert(users).values({
             name: user?.name,
@@ -26,8 +30,8 @@ export const addUser = async (user: User) => {
             email: user?.email,
             clerkId: user?.clerkId,
             picture: user?.picture,
-            password: user?.password,
         })
+            .returning({ clerkClienId: user?.clerkId });
     } catch (error) {
         console.error('Error adding new User!')
     }

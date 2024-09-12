@@ -2,6 +2,9 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
+import { addUser } from 'actions/userActions'
+import { NextResponse } from 'next/server'
+import { json } from 'stream/consumers'
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -57,14 +60,15 @@ export async function POST(req: Request) {
 
         const user = {
             clerkId: id,
-            email: email_addresses[0].email_address,
+            email: email_addresses,
             name: username,
             firstName: first_name,
             lastname: last_name,
             picture: image_url,
         } 
         
-        await addUdser(user);
+      await addUser(user);
+      return NextResponse.json({ message: 'New user created', user })
     } 
      
 
