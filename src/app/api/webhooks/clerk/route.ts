@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
-import { WebhookEvent } from '@clerk/nextjs/server'
+import type { WebhookEvent } from '@clerk/nextjs/server'
 import { addUser } from 'actions/userActions'
 import { NextResponse } from 'next/server'
 import { json } from 'stream/consumers'
