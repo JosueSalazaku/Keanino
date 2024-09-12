@@ -11,7 +11,6 @@ export const users = createTable('users', {
   email: varchar('email', { length: 255 }).notNull().unique(),
   clerkId: text('clerkId').notNull(),
   picture: text('picture').notNull(),
-  password: varchar('password', { length: 255 }).notNull(),
   role: varchar('role', { length: 50 }).default('user').notNull(),
 }, (table) => ({
   emailIndex: uniqueIndex('emailIndex').on(table.email),
