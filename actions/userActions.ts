@@ -5,7 +5,6 @@
 
 import { db } from "../src/server/db/index"
 import { revalidatePath } from "next/cache"
-import { eq } from "drizzle-orm"
 import { users } from "../src/server/db/schema";
 import type { User } from "../src/types"
 import { clerkClient } from "@clerk/nextjs/server";
@@ -37,11 +36,3 @@ export const addUser = async (user: any) => {
     }
     revalidatePath("/")
 }
-
-// export const getUser = async (userId: number) => {
-//     try {
-
-//     } catch (error) {
-        
-//     }
-// }
