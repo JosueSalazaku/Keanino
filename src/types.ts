@@ -11,11 +11,13 @@ export interface Post {
 export interface User { 
     id: string;
     name: string;
-    surname: string;
+    firstName: string;
     username: string;
     age: number;
     email: string;
+    clerkId: string;
     password: string;
+    picture: string;
     role: 'user' | 'Admin';
 }
 

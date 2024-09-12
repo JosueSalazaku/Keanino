@@ -1,13 +1,8 @@
-import { drizzle } from 'drizzle-orm/postgres-js'
-import postgres from 'postgres'
-import { posts } from './schema'
-import { Post } from '~/types'
+import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
+import { users } from './schema';
 
+const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
+export const db = drizzle(sql);
 
-
-const connectionString = process.env.DATABASE_URL ?? ''
-const client = postgres(connectionString)
-const db = drizzle(client);
-
-
-const allPosts = await db.select().from(posts);
+const result = await db.select().from(users);

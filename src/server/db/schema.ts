@@ -1,23 +1,24 @@
 import { sql } from 'drizzle-orm';
-import { index, pgTableCreator, serial, timestamp, varchar, uuid, integer, uniqueIndex } from 'drizzle-orm/pg-core';
+import { index, pgTableCreator, serial, timestamp, varchar, uuid, integer, uniqueIndex, text } from 'drizzle-orm/pg-core';
 
 const createTable = pgTableCreator((name) => `${name}`);
 
 export const users = createTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: varchar('name', { length: 255 }).notNull(),
-  surname: varchar('surname', { length: 255 }).notNull(),
+  firstName: varchar('firstName', { length: 255 }).notNull(),
   username: varchar('username', { length: 255 }).notNull().unique(),
-  age: integer('age').notNull(),
   email: varchar('email', { length: 255 }).notNull().unique(),
+  clerkId: text('clerkId').notNull(),
   password: varchar('password', { length: 255 }).notNull(),
   role: varchar('role', { length: 50 }).default('user').notNull(),
+  picture: varchar('picture', { length: 2048 }),
 }, (table) => ({
   emailIndex: uniqueIndex('emailIndex').on(table.email),
 }));
 
 export const posts = createTable('posts', {
-  id: uuid('id').primaryKey().defaultRandom(), // Changed to uuid
+  id: uuid('id').primaryKey().defaultRandom(), 
   name: varchar('name', { length: 256 }).notNull(),
   userId: uuid('user_id').notNull().references(() => users.id),
   content: varchar('content', { length: 1000 }).notNull(),
@@ -44,6 +45,7 @@ export const tags = createTable('tags', {
 
 export const postTags = createTable('post_tags', {
   postId: uuid('post_id').notNull().references(() => posts.id),
+  userId: uuid('user_id').notNull().references(() => users.id),
   tagId: integer('tag_id').notNull().references(() => tags.id),
 }, (table) => ({
   postTagIndex: uniqueIndex('post_tag_index').on(table.postId, table.tagId),
