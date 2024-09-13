@@ -2,12 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
-
 import { db } from "../src/server/db/index"
-import { revalidatePath } from "next/cache"
 import { users } from "../src/server/db/schema";
-import type { User } from "../src/types"
-import { clerkClient } from "@clerk/nextjs/server";
 
 export const getAllUsers = async () => {
     try {
@@ -22,17 +18,21 @@ export const getAllUsers = async () => {
 
 export const addUser = async (user: any) => {
     try {
-        await db.insert(users).values({
-            name: user?.name,
-            firstName: user?.firstName,
-            username: user?.username,
-            email: user?.email,
-            clerkId: user?.clerkId,
-            picture: user?.picture,
+      const result = await db
+        .insert(users)
+        .values({
+          name: user?.name,
+          firstName: user?.firstName,
+          username: user?.username,
+          email: user?.email,
+          clerkId: user?.clerkId,
+          picture: user?.picture,
         })
-            .returning({ clerkClientId: users.clerkId });
+        .returning({ clerkClientId: users.clerkId }); // Correctly return the inserted clerkId
+  
+      console.log('Inserted user:', result);
     } catch (error) {
-        console.error('Error adding new User!')
+      console.error('Error adding new user:', error);
     }
-    // revalidatePath("/")
-}
+  };
+  
