@@ -18,24 +18,24 @@ export const users = createTable('users', {
 
 export const posts = createTable('posts', {
   id: uuid('id').primaryKey().defaultRandom(), 
-  name: varchar('name', { length: 256 }).notNull(),
+  title: varchar('title', { length: 256 }).notNull(),
   userId: uuid('user_id').notNull().references(() => users.id),
-  content: varchar('content', { length: 1000 }).notNull(),
+  content: text('content').notNull(),
   pictureUrl: varchar('picture_url', { length: 2048 }),
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
 }, (table) => ({
-  nameIndex: index('name_idx').on(table.name),
+  titleIndex: index('title_idx').on(table.title),
   userIndex: index('user_idx').on(table.userId),
 }));
 
 export const comments = createTable('comments', {
   id: serial('id').primaryKey(),
-  postId: uuid('post_id').notNull().references(() => posts.id), // Ensure this is uuid
+  postId: uuid('post_id').notNull().references(() => posts.id),
   userId: uuid('user_id').notNull().references(() => users.id),
-  name: varchar('name', { length: 255 }).notNull(),
   content: varchar('content', { length: 1000 }).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),  // Track updates
 });
 
 export const tags = createTable('tags', {
@@ -45,7 +45,6 @@ export const tags = createTable('tags', {
 
 export const postTags = createTable('post_tags', {
   postId: uuid('post_id').notNull().references(() => posts.id),
-  userId: uuid('user_id').notNull().references(() => users.id),
   tagId: integer('tag_id').notNull().references(() => tags.id),
 }, (table) => ({
   postTagIndex: uniqueIndex('post_tag_index').on(table.postId, table.tagId),

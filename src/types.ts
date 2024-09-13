@@ -1,20 +1,21 @@
 export interface Post {
   id: number;
-  name: string;
-  body: string;
+  title: string;
+  content: string;
+  pictureUrl: string,
   createdAt: Date;
   updatedAt: Date;
 }
 
 export interface User { 
-    id: string;
-    name: string;
-    firstName: string;
-    username: string;
-    email: string;
-    clerkId: string;
-    picture: string;
-    // role: 'user' | 'Admin';
+  id: string;
+  name: string;
+  firstName: string;
+  username: string;
+  email: string;
+  clerkId: string;
+  picture: string;
+
 }
 
 export interface Comment {
@@ -23,6 +24,7 @@ export interface Comment {
   userId: string;
   content: string;
   createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Tag {
@@ -41,13 +43,14 @@ export interface Like {
   createdAt: Date;
 }
 
-export interface Like {
-  postId: number;
-  userId: string;
-  createdAt: Date;
-}
-
 export interface Follower {
   followerId: string;
   followingId: string;
+}
+
+export interface Media {
+  id: number,
+  postId: number,
+  url: string,
+  mediatype: string
 }
