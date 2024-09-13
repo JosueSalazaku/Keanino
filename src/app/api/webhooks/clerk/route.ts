@@ -51,11 +51,13 @@ export async function POST(req: Request) {
     const user = {
       clerkId: id,
       email: email_addresses[0]?.email_address,
-      name: username || first_name || last_name || 'Unknown User',  
+      name: username || first_name || last_name || 'Unknown User',
       firstName: first_name,
       lastname: last_name,
       picture: image_url,
+      username: username || email_addresses[0]?.email_address.split('@')[0] || 'unknown_user',
   };
+  
 
     await addUser(user);
     return NextResponse.json({ message: 'New user created', user });
