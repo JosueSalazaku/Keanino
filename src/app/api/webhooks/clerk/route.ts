@@ -65,7 +65,7 @@ export async function POST(req: Request) {
             lastname: last_name,
             picture: image_url,
         } 
-        
+      await addUser(user)  
       return NextResponse.json({ message: 'New user created', user })
     } 
      
