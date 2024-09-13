@@ -16,24 +16,24 @@ export async function GET() {
 }
 
 // Handler for POST /api/posts
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
-    const post: Post = await request.json() as Post;
+    const { title, content, userId } = await req.json() as Post;
 
-    const result = await db
-      .insert(posts)
-      .values({
-        title: post.title,
-        content: post.content,
-        userId: post.userId,
-        pictureUrl: post.pictureUrl,
-      })
-      .returning();
 
-    console.log('Inserted post:', result);
-    return NextResponse.json(result[0]);
+    if (!title || !content || !userId) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
+
+    const newPost = await db.insert(posts).values({
+      title,
+      content,
+      userId, 
+    });
+
+    return NextResponse.json({ message: "Post created successfully", post: newPost });
   } catch (error) {
-    console.error('Error adding new post:', error);
-    return NextResponse.json({ error: 'Error adding new post' }, { status: 500 });
+    console.error("Error adding new post:", error);
+    return NextResponse.json({ error: "Error adding new post" }, { status: 500 });
   }
 }

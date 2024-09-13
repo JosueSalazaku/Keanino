@@ -1,50 +1,48 @@
-"use client"
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
+"use client";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useUser } from '@clerk/nextjs'; // Import useUser from Clerk
+import React, { useState } from "react";
+import axios from "axios";
+import { useUser } from "@clerk/nextjs"; // Import useUser to get user info from Clerk
 
 export default function CreatePost() {
-  const [submitTitle, setSubmitTitle] = useState<string>('');
-  const [submitContent, setSubmitContent] = useState<string>('');
+  const [submitTitle, setSubmitTitle] = useState<string>("");
+  const [submitContent, setSubmitContent] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { user } = useUser(); // Get the current user from Clerk
+  const { user } = useUser(); // Get the current user object
 
   async function handlePost(event: React.FormEvent) {
     event.preventDefault();
 
-    const title = submitTitle;
-    const content = submitContent;
-
-    if (!user?.id) {
-      setError('User not authenticated.');
+    if (!user || !user.id) {
+      setError("User not authenticated.");
       return;
     }
 
     const data = {
-      title,
-      content,
-      user_id: user.id, 
+      title: submitTitle,
+      content: submitContent,
+      userId: user.id, // Add the userId from Clerk
     };
 
     try {
       setIsSubmitting(true);
       setError(null);
 
-      const post = await axios.post('/api/posts', data); 
+      // Send POST request to your API route with title, content, and userId
+      const response = await axios.post("/api/posts", data);
 
-      if (post.status === 200) {
-        setSubmitTitle('');
-        setSubmitContent('');
+      if (response.status === 200) {
+        setSubmitTitle("");
+        setSubmitContent("");
       }
-
     } catch (error) {
-      console.error('Error, post not created:', error);
-      setError('Failed to create post. Please try again.');
+      console.error("Error, post not created:", error);
+      setError("Failed to create post. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -52,25 +50,25 @@ export default function CreatePost() {
 
   return (
     <form onSubmit={handlePost} className="flex flex-col justify-center items-center space-y-8">
-      <Input 
-        value={submitTitle} 
-        onChange={(event) => setSubmitTitle(event.target.value)} 
-        className="w-[500px] h-[60px] text-black text-2xl" 
+      <Input
+        value={submitTitle}
+        onChange={(event) => setSubmitTitle(event.target.value)}
+        className="w-[500px] h-[60px] text-black text-2xl"
         placeholder="Enter post title"
       />
-      <Textarea 
-        value={submitContent} 
-        onChange={(event) => setSubmitContent(event.target.value)} 
-        className="w-[500px] h-[360px] text-black text-2xl" 
+      <Textarea
+        value={submitContent}
+        onChange={(event) => setSubmitContent(event.target.value)}
+        className="w-[500px] h-[360px] text-black text-2xl"
         placeholder="Enter post content"
       />
       {error && <p className="text-red-500">{error}</p>}
-      <Button 
-        type="submit" 
+      <Button
+        type="submit"
         className="w-[120px] h-[45px] bg-white text-primary text-2xl font-bold"
         disabled={isSubmitting}
       >
-        {isSubmitting ? 'Posting...' : 'Post'}
+        {isSubmitting ? "Posting..." : "Post"}
       </Button>
     </form>
   );
