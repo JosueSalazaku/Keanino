@@ -28,17 +28,16 @@ export default function CreatePost() {
     const data = {
       title,
       content,
-      user_id: user.id, // Add user_id from Clerk's current user
+      user_id: user.id, 
     };
 
     try {
       setIsSubmitting(true);
       setError(null);
 
-      const post = await axios.post('/api/posts', data); // Make sure /api/posts route exists
+      const post = await axios.post('/api/posts', data); 
 
       if (post.status === 200) {
-        // Clear the form fields if post creation is successful
         setSubmitTitle('');
         setSubmitContent('');
       }

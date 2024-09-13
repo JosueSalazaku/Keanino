@@ -4,7 +4,6 @@ export interface Post {
   content: string;
   userId: string,
   pictureUrl: string,
-
 }
 
 export interface User { 
@@ -15,7 +14,6 @@ export interface User {
   email: string;
   clerkId: string;
   picture: string;
-
 }
 
 export interface Comment {
