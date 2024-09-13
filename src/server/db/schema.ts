@@ -19,7 +19,7 @@ export const users = createTable('users', {
 export const posts = createTable('posts', {
   id: uuid('id').primaryKey().defaultRandom(), 
   title: text('title').notNull(),
-  userId: uuid('userId').notNull().references(() => users.id),
+  userId: varchar('userId', { length: 255 }).notNull(),
   content: text('content').notNull(),
   pictureUrl: varchar('picture_url', { length: 2048 }),
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),

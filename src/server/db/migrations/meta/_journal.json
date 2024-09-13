@@ -43,6 +43,13 @@
       "when": 1726267088379,
       "tag": "0005_amused_jack_flag",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1726267778738,
+      "tag": "0006_tiny_dazzler",
+      "breakpoints": true
     }
   ]
 }
