@@ -20,7 +20,7 @@ export const getAllUsers = async () => {
 
 }
 
-export const addUser = async (user: User) => {
+export const addUser = async (user: any) => {
     try {
         await db.insert(users).values({
             name: user?.name,
@@ -30,9 +30,9 @@ export const addUser = async (user: User) => {
             clerkId: user?.clerkId,
             picture: user?.picture,
         })
-            .returning({ clerkClientId: users.clerkId });
+            .returning({ clerkClientId: users?.clerkId });
     } catch (error) {
         console.error('Error adding new User!')
     }
-    revalidatePath("/")
+    // revalidatePath("/")
 }
