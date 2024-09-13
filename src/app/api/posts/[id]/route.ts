@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { db } from '~/server/db';
 import { posts } from '~/server/db/schema'; 
 import { eq } from 'drizzle-orm';
-import { Post } from '~/types';
+import type { Post } from '~/types';
 
 export async function GET(
   request: Request,

@@ -8,7 +8,7 @@ export interface Post {
 }
 
 export interface User { 
-  id?: string;
+  id: string;
   name: string;
   firstName: string;
   username: string;
