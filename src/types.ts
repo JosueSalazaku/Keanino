@@ -2,9 +2,9 @@ export interface Post {
   id: number;
   title: string;
   content: string;
+  userId: string,
   pictureUrl: string,
-  createdAt: Date;
-  updatedAt: Date;
+
 }
 
 export interface User { 
@@ -23,8 +23,6 @@ export interface Comment {
   postId: number;
   userId: string;
   content: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface Tag {
@@ -40,7 +38,6 @@ export interface PostTag {
 export interface Like {
   postId: number;
   userId: string;
-  createdAt: Date;
 }
 
 export interface Follower {
