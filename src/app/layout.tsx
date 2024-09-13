@@ -1,6 +1,5 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import { TopNav } from "~/app/_components/TopNav";
-
 import "~/styles/globals.css";
 
 export const metadata = {
@@ -18,7 +17,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className="bg-main">
-          <div className="max-w-600 mx-auto h-[100vh]">
+          <div className="max-w-600 mx-auto h-[100vh] font-sans">
             <TopNav />
             {children}
           </div>

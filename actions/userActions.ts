@@ -2,8 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
+import { eq } from "drizzle-orm";
 import { db } from "../src/server/db/index"
-import { users } from "../src/server/db/schema";
+import { users } from "../src/server/db/schema"
+
 
 export const getAllUsers = async () => {
     try {
@@ -15,6 +17,17 @@ export const getAllUsers = async () => {
     }
 
 }
+
+export const getUser = async (userId: string) => { 
+  try {
+    const data = await db.select().from(users).where(eq(users.id, userId));
+    console.log(data)
+    return data; 
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    throw error; 
+  }
+};
 
 export const addUser = async (user: any) => {
     try {
@@ -28,7 +41,7 @@ export const addUser = async (user: any) => {
           clerkId: user?.clerkId,
           picture: user?.picture,
         })
-        .returning({ clerkClientId: users.clerkId }); // Correctly return the inserted clerkId
+        .returning({ clerkClientId: users.clerkId }); 
   
       console.log('Inserted user:', result);
     } catch (error) {
