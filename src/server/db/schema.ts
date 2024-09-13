@@ -18,7 +18,7 @@ export const users = createTable('users', {
 
 export const posts = createTable('posts', {
   id: uuid('id').primaryKey().defaultRandom(), 
-  title: varchar('title', { length: 256 }).notNull(),
+  title: text('title').notNull(),
   userId: uuid('user_id').notNull().references(() => users.id),
   content: text('content').notNull(),
   pictureUrl: varchar('picture_url', { length: 2048 }),

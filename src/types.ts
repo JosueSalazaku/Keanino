@@ -1,10 +1,10 @@
 export interface Post {
-  id: number;
+  id?: string;
   title: string;
   content: string;
+  userId: string,
   pictureUrl: string,
-  createdAt: Date;
-  updatedAt: Date;
+
 }
 
 export interface User { 
@@ -19,28 +19,25 @@ export interface User {
 }
 
 export interface Comment {
-  id: number;
-  postId: number;
+  id?: string;
+  postId: string;
   userId: string;
   content: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface Tag {
-  id: number;
+  id?: string;
   name: string;
 }
 
 export interface PostTag {
-  postId: number;
-  tagId: number;
+  postId: string;
+  tagId: string;
 }
 
 export interface Like {
-  postId: number;
+  postId: string;
   userId: string;
-  createdAt: Date;
 }
 
 export interface Follower {
@@ -49,7 +46,7 @@ export interface Follower {
 }
 
 export interface Media {
-  id: number,
+  id?: string,
   postId: number,
   url: string,
   mediatype: string
