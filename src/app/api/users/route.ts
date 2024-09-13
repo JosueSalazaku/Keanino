@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-// app/api/users/route.ts
 import { NextResponse } from "next/server";
 import { db } from "~/server/db"; 
 import { users } from "~/server/db/schema"; 
