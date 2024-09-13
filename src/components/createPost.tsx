@@ -21,7 +21,7 @@ export default function CreatePost() {
       setIsSubmitting(true);
       setError(null);
 
-      const response = await axios.post('/api/post', data)
+      const response = await axios.post('http://localhost:3000/api/posts', data)
       
       if (response.status === 200) {
         console.log("Post created successfully:", response.data);

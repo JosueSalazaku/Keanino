@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextResponse } from 'next/server';
 import { db } from '~/server/db';
 import { posts } from '~/server/db/schema'; 
@@ -19,7 +18,7 @@ export async function GET() {
 // Handler for POST /api/posts
 export async function POST(request: Request) {
   try {
-    const post: Post = await request.json();
+    const post: Post = await request.json() as Post;
 
     const result = await db
       .insert(posts)
