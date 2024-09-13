@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Webhook } from 'svix';
 import { headers } from 'next/headers';
@@ -50,11 +51,11 @@ export async function POST(req: Request) {
     const user = {
       clerkId: id,
       email: email_addresses[0]?.email_address,
-      name: username,
+      name: username || first_name || last_name || 'Unknown User',  
       firstName: first_name,
-      lastName: last_name,
+      lastname: last_name,
       picture: image_url,
-    };
+  };
 
     await addUser(user);
     return NextResponse.json({ message: 'New user created', user });
