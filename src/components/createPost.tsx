@@ -5,7 +5,7 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import React, { useState } from "react";
 import axios from "axios";
-import { useUser } from "@clerk/nextjs"; // Import useUser to get user info from Clerk
+import { useUser } from "@clerk/nextjs"; 
 
 export default function CreatePost() {
   const [submitTitle, setSubmitTitle] = useState<string>("");
@@ -13,7 +13,7 @@ export default function CreatePost() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { user } = useUser(); // Get the current user object
+  const { user } = useUser(); 
 
   async function handlePost(event: React.FormEvent) {
     event.preventDefault();
@@ -33,7 +33,6 @@ export default function CreatePost() {
       setIsSubmitting(true);
       setError(null);
 
-      // Send POST request to your API route with title, content, and userId
       const response = await axios.post("/api/posts", data);
 
       if (response.status === 200) {

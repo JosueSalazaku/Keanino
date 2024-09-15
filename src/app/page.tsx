@@ -1,5 +1,6 @@
 import CreatePost from "~/components/createPost";
 import { SignedIn, SignedOut } from "@clerk/nextjs"; 
+import DisplayPosts from "~/components/DisplayPosts";
 
 export default function HomePage() {
   return (
@@ -12,6 +13,7 @@ export default function HomePage() {
       <SignedIn>
         <section>
           <CreatePost />
+          <DisplayPosts />
         </section>
       </SignedIn>
 
