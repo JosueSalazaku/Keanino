@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { Post } from '~/types';
+import type { Post } from '~/types';
 import axios from 'axios';
 
 export default function DisplayPosts() {
@@ -23,7 +23,7 @@ export default function DisplayPosts() {
                 }
             }
         }
-        fetchPosts();
+        void fetchPosts();
     }, []);
 
     if (error) {
