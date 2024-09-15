@@ -38,6 +38,7 @@ export default function CreatePost() {
       if (response.status === 200) {
         setSubmitTitle("");
         setSubmitContent("");
+        window.location.reload(); // Refresh the page
       }
     } catch (error) {
       console.error("Error, post not created:", error);
