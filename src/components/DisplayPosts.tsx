@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import type { Post } from '~/types';
 import axios from 'axios';
+import { UserButton } from '@clerk/nextjs';
 
 export default function DisplayPosts() {
     const [showPosts, setShowPosts] = useState<Post[]>([]);
@@ -30,14 +31,15 @@ export default function DisplayPosts() {
     }
 
     return (
-        <div>
+        <div className='gap-10'>
             <h1>Display Posts</h1>
             <ul>
                 {showPosts.map((post) => (
                     <li key={post.id}>
+                      <li className=' flex flex-row gap-5 item center'> <UserButton/> <h3>{post.username}</h3></li>
                         <h2>{post.title}</h2>  
                         <p>{post.content}</p> 
-                        <small>Posted by {post.username}</small>
+                        
                     </li>
                 ))}
             </ul>
