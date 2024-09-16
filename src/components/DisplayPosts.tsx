@@ -38,6 +38,7 @@ export default function DisplayPosts() {
                     <div key={post.id}>
                         <li>{post.title}</li>
                         <li>{post.content}</li>
+                        <li>{post.username}</li>
                     </div>
                 ))}
             </ul>

@@ -17,9 +17,9 @@ export const users = createTable('users', {
 }));
 
 export const posts = createTable('posts', {
-  id: uuid('id').primaryKey().defaultRandom(),
+  id: uuid('id').primaryKey().defaultRandom(), 
   title: text('title').notNull(),
-  userId: uuid('user_id').notNull(),  
+  userId: varchar('userId', { length: 255 }).notNull(),
   content: text('content').notNull(),
   pictureUrl: varchar('picture_url', { length: 2048 }),
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
@@ -29,12 +29,10 @@ export const posts = createTable('posts', {
   userIndex: index('user_idx').on(table.userId),
 }));
 
-
-
 export const comments = createTable('comments', {
   id: serial('id').primaryKey(),
   postId: uuid('postId').notNull().references(() => posts.id),
-  userId: uuid('user_id').notNull().references(() => users.id),
+  userId: uuid('userId').notNull().references(() => users.id),
   content: varchar('content', { length: 1000 }).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),  // Track updates
@@ -54,7 +52,7 @@ export const postTags = createTable('postTags', {
 
 export const likes = createTable('likes', {
   postId: uuid('postId').notNull().references(() => posts.id),
-  userId: uuid('user_id').notNull().references(() => users.id),
+  userId: uuid('userId').notNull().references(() => users.id),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
 }, (table) => ({
   likeIndex: uniqueIndex('like_index').on(table.postId, table.userId),
