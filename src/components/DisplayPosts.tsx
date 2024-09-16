@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from 'react';
 import type { Post } from '~/types';
 import axios from 'axios';
@@ -13,7 +13,6 @@ export default function DisplayPosts() {
                 const response = await axios.get<Post[]>("/api/posts");
                 const data = response.data;
                 console.log(data);
-                
                 setShowPosts(data);
             } catch (error) {
                 if (axios.isAxiosError(error)) {
@@ -35,11 +34,11 @@ export default function DisplayPosts() {
             <h1>Display Posts</h1>
             <ul>
                 {showPosts.map((post) => (
-                    <div key={post.id}>
-                        <li>{post.title}</li>
-                        <li>{post.content}</li>
-                        <li>{post.userId}</li>
-                    </div>
+                    <li key={post.id}>
+                        <h2>{post.title}</h2>  
+                        <p>{post.content}</p> 
+                        <small>Posted by {post.username}</small>
+                    </li>
                 ))}
             </ul>
         </div>

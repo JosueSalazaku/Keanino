@@ -113,6 +113,13 @@
       "when": 1726482790385,
       "tag": "0015_thin_archangel",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "6",
+      "when": 1726483632124,
+      "tag": "0016_glamorous_nemesis",
+      "breakpoints": true
     }
   ]
 }
