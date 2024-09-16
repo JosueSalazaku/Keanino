@@ -19,20 +19,21 @@ export const users = createTable('users', {
 export const posts = createTable('posts', {
   id: uuid('id').primaryKey().defaultRandom(), 
   title: text('title').notNull(),
-  userId: varchar('userId', { length: 255 }).notNull(),
+  userId: varchar('user_id', { length: 255 }).notNull(),  // Changed to snake_case
   content: text('content').notNull(),
   pictureUrl: varchar('picture_url', { length: 2048 }),
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
 }, (table) => ({
   titleIndex: index('title_idx').on(table.title),
-  userIndex: index('user_idx').on(table.userId),
+  userIndex: index('user_idx').on(table.userId),  // Updated index to use user_id
 }));
+
 
 export const comments = createTable('comments', {
   id: serial('id').primaryKey(),
   postId: uuid('postId').notNull().references(() => posts.id),
-  userId: uuid('userId').notNull().references(() => users.id),
+  userId: uuid('user_id').notNull().references(() => users.id),
   content: varchar('content', { length: 1000 }).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),  // Track updates
@@ -52,7 +53,7 @@ export const postTags = createTable('postTags', {
 
 export const likes = createTable('likes', {
   postId: uuid('postId').notNull().references(() => posts.id),
-  userId: uuid('userId').notNull().references(() => users.id),
+  userId: uuid('user_id').notNull().references(() => users.id),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
 }, (table) => ({
   likeIndex: uniqueIndex('like_index').on(table.postId, table.userId),

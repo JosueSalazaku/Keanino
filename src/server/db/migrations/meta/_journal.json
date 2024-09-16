@@ -50,6 +50,20 @@
       "when": 1726267778738,
       "tag": "0006_tiny_dazzler",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1726451444142,
+      "tag": "0007_violet_true_believers",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1726451854060,
+      "tag": "0008_late_millenium_guard",
+      "breakpoints": true
     }
   ]
 }
