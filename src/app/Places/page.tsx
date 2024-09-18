@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Pages() {
+export default function Places() {
   return (
     <div>Places</div>
   )

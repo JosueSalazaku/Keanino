@@ -1,9 +1,8 @@
 import React from 'react'
 
-function Pages() {
+export default function People() {
   return (
     <div>People</div>
   )
 }
 
-export default Pages
