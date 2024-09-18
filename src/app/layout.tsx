@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-main">
+      <body className="bg-primary">
         <ClerkProvider>
           <div className="max-w-600 mx-auto h-[100vh] font-sans">
             <TopNav />

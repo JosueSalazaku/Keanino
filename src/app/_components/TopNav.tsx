@@ -2,6 +2,9 @@
 import { useState } from 'react';
 import { SignedIn, SignedOut, UserButton, useAuth } from '@clerk/nextjs';
 import Link from 'next/link';
+import { Button } from '~/components/ui/button';
+import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
+
 
 export function TopNav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,11 +16,12 @@ export function TopNav() {
       <Link href="/" className="font-didot text-2xl font-bold text-main">
         Keanino
       </Link>
-      <button onClick={toggle} className="md:hidden">
-        {isOpen ? 'Close' : 'Menu'}
+      <button onClick={toggle} className="md:hidden text-white">
+        {isOpen ? <HiOutlineX /> : <HiOutlineMenu />}
       </button>
       <div className="hidden md:flex flex-row items-center text-white space-x-6">
         <SignedIn>
+          <Button className='bg-main font-bold text-primary'><Link href="/write">write</Link></Button>
           <Link href="/people">People</Link>
           <Link href="/places">Places</Link>
           <Link href="/pages">Pages</Link>
@@ -34,10 +38,10 @@ export function TopNav() {
       {isOpen && (
         <div className="absolute top-20 left-0 right-0 z-50 bg-orange-400 p-5 flex flex-col text-6xl space-y-10 text-main md:hidden">
           <SignedIn>
+            <Link href="/write">write</Link>
             <Link href="/people">People</Link>
             <Link href="/places">Places</Link>
             <Link href="/pages">Pages</Link>
-            <UserButton />
             <button onClick={() => signOut()}>Sign Out</button>
           </SignedIn>
           <SignedOut>
