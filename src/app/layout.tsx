@@ -1,4 +1,4 @@
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs';
 import { TopNav } from "~/app/_components/TopNav";
 import "~/styles/globals.css";
 
@@ -14,16 +14,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className="bg-main">
+    <html lang="en">
+      <body className="bg-main">
+        <ClerkProvider>
           <div className="max-w-600 mx-auto h-[100vh] font-sans">
             <TopNav />
             {children}
           </div>
-          </body>
-      </html>
-      </ClerkProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
-
