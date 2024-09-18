@@ -34,7 +34,6 @@ export function TopNav() {
         </SignedOut>
       </div>
 
-      {/* Small screen */}
       {isOpen && (
         <div className="absolute top-20 left-0 right-0 z-50 bg-orange-400 p-5 flex flex-col text-6xl space-y-10 text-main md:hidden">
           <SignedIn>

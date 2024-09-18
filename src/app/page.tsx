@@ -8,15 +8,11 @@ export default function HomePage() {
     <section className="mt-10 gap-7">
       The 3 P
     </section>
-
-    {/* Show CreatePost when signed in */}
     <SignedIn>
       <section>
         <DisplayPosts />
       </section>
     </SignedIn>
-
-    {/* Show something else when signed out */}
     <SignedOut>
       <section>
         <p>Please sign in to create a post.</p>
