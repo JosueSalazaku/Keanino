@@ -1,5 +1,5 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import DisplayPosts from "~/components/displayPosts";
+import DisplayPosts from "~/components/DisplayPosts";
 
 
 export default function HomePage() {
