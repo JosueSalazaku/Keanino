@@ -1,15 +1,22 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 "use client";
+import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import React, { useState } from "react";
 import axios from "axios";
-import { useUser } from "@clerk/nextjs"; 
+import { useUser } from "@clerk/nextjs";
 
 export default function CreatePost() {
-  const [submitTitle, setSubmitTitle] = useState<string>("");
-  const [submitContent, setSubmitContent] = useState<string>("");
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+  const initialTitle = searchParams.get('title');
+  const initialContent = searchParams.get('content');
+
+  const [submitTitle, setSubmitTitle] = useState<string>(initialTitle || "");
+  const [submitContent, setSubmitContent] = useState<string>(initialContent || "");  
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,23 +33,31 @@ export default function CreatePost() {
     const data = {
       title: submitTitle,
       content: submitContent,
-      userId: user.id, // Add the userId from Clerk
+      userId: user.id, 
     };
 
     try {
       setIsSubmitting(true);
       setError(null);
 
-      const response = await axios.post("/api/posts", data);
+      let response;
+
+      if (id) {
+        // Update an existing post
+        response = await axios.put(`/api/posts/${id}`, data);
+      } else {
+        // Create a new post
+        response = await axios.post("/api/posts", data);
+      }
 
       if (response.status === 200) {
         setSubmitTitle("");
         setSubmitContent("");
-        window.location.reload(); // Refresh the page
+        window.location.href = '/';
       }
     } catch (error) {
-      console.error("Error, post not created:", error);
-      setError("Failed to create post. Please try again.");
+      console.error("Error, post not created or updated:", error);
+      setError("Failed to submit the post. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -68,7 +83,7 @@ export default function CreatePost() {
         className="w-[120px] h-[45px] bg-white text-primary text-2xl font-bold"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "Posting..." : "Post"}
+         {isSubmitting ? 'Submitting...' : id ? 'Update Post' : 'Create Post'}
       </Button>
     </form>
   );
