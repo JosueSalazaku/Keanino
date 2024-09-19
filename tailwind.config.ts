@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { type Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
@@ -22,10 +23,11 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
         didot: ["'Didot', 'Didot LT STD', 'Hoefler Text', 'Garamond', 'Times New Roman', serif"],
+        noto: ['"Noto Sans"', 'sans-serif'], // Add Noto Sans here
       },
       colors: {
         primary: "#C94D03",
-        main: "#FFEDCC"
+        main: "#FFEDCC",
       },
       keyframes: {
         "accordion-down": {
@@ -43,7 +45,29 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    function (context: { addUtilities: (utilities: Record<string, any>) => void }) {
+      const { addUtilities } = context;
+      const newFontUtilities = {
+        '.font-noto': {
+          fontFamily: '"Noto Sans", sans-serif',
+          fontOpticalSizing: 'auto',
+          fontStyle: 'normal',
+          fontVariationSettings: '"wdth" 100',
+        },
+        '.font-noto-bold': {
+          fontFamily: '"Noto Sans", sans-serif',
+          fontWeight: '700',
+          fontOpticalSizing: 'auto',
+          fontStyle: 'normal',
+          fontVariationSettings: '"wdth" 100',
+        },
+      };
+
+      addUtilities(newFontUtilities);
+    },
+  ],
 };
 
 export default config;
