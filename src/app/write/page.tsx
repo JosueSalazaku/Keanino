@@ -1,7 +1,6 @@
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 import React from 'react'
 import CreatePost from '~/components/createPost'
-import DisplayPosts from '~/components/DisplayPosts'
 
 export default function page() {
   return (
@@ -9,7 +8,6 @@ export default function page() {
     <SignedIn>
       <section>
         <CreatePost />
-        <DisplayPosts />
       </section>
     </SignedIn>
     <SignedOut>

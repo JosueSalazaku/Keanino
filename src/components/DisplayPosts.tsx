@@ -32,9 +32,9 @@ export default function DisplayPosts() {
     }
 
     return (
-<div className="gap-10">
+<div className="gap-10 w-[750px]">
   <h1 className="text-2xl font-bold mb-6">Display Posts</h1>
-  <ul className="space-y-6">
+  <ul className=" space-y-9">
     {showPosts.map((post) => (
       <li
         key={post.id}
