@@ -42,7 +42,7 @@ export default function DisplayPosts() {
   };
   
   return (
-    <div className="gap-10 w-[750px] ">
+    <div className="gap-10 w-full max-w-[750px] mx-auto px-4 sm:px-6 lg:px-8">
       <h1 className="text-2xl font-bold mb-6">Display Posts</h1>
       <ul className="space-y-9">
         {showPosts.map((post) => (

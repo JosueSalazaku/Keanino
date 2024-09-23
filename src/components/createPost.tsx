@@ -43,10 +43,8 @@ export default function CreatePost() {
       let response;
 
       if (id) {
-        // Update an existing post
         response = await axios.put(`/api/posts/${id}`, data);
       } else {
-        // Create a new post
         response = await axios.post("/api/posts", data);
       }
 
@@ -64,23 +62,23 @@ export default function CreatePost() {
   }
 
   return (
-    <form onSubmit={handlePost} className="flex flex-col justify-center items-center space-y-8">
+    <form onSubmit={handlePost} className="w-full h-full flex flex-col justify-center items-center space-y-8 p-4">
       <Input
         value={submitTitle}
         onChange={(event) => setSubmitTitle(event.target.value)}
-        className="w-[500px] h-[60px] text-black text-2xl"
+        className="w-full md:w-[500px] h-[60px] text-black text-2xl"
         placeholder="Enter post title"
       />
       <Textarea
         value={submitContent}
         onChange={(event) => setSubmitContent(event.target.value)}
-        className="w-[500px] h-[360px] text-black text-2xl"
+        className="w-full md:w-[500px] h-[360px] text-black text-2xl"
         placeholder="Enter post content"
       />
       {error && <p className="text-red-500">{error}</p>}
       <Button
         type="submit"
-        className="w-[120px] h-[45px] bg-white text-primary text-2xl font-bold"
+        className="w-full md:w-[120px] h-[45px] bg-white text-primary text-2xl font-bold"
         disabled={isSubmitting}
       >
          {isSubmitting ? 'Submitting...' : id ? 'Update Post' : 'Create Post'}
