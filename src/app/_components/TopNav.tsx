@@ -58,7 +58,7 @@ export function TopNav() {
       </div>
 
       {isOpen && (
-        <div className="absolute rounded-b-lg top-20 h-screen left-0 right-0 z-50 bg-orange-400 flex flex-col justify-evenly items-center text-6xl text-main md:hidden">
+        <div className="absolute rounded-b-lg top-20 h-screen left-0 right-0 z-50 bg-orange-400 flex flex-col justify-start pt-24 gap-20 items-center text-6xl text-main md:hidden">
           <SignedIn>
             <div className="flex items-center space-x-4">
               {user?.imageUrl && (
@@ -72,16 +72,16 @@ export function TopNav() {
               )}
               <span>{user?.username ?? "User"}</span>
             </div>
-            <Link href="/write" onClick={closeMenu}>
+            <Link href="/write" onClick={closeMenu} className="hover:underline">
               Write
             </Link>
-            <Link href="/people" onClick={closeMenu}>
+            <Link href="/people" onClick={closeMenu} className="hover:underline">
               People
             </Link>
-            <Link href="/places" onClick={closeMenu}>
+            <Link href="/places" onClick={closeMenu} className="hover:underline">
               Places
             </Link>
-            <Link href="/pages" onClick={closeMenu}>
+            <Link href="/pages" onClick={closeMenu} className="hover:underline">
               Pages
             </Link>
             <button onClick={async () => { await signOut(); closeMenu(); }}>Sign Out</button>
