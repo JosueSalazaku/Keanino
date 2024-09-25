@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { SignedIn, SignedOut, UserButton, useAuth, useUser } from "@clerk/nextjs";
+import { SignedIn, SignedOut, useAuth, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
@@ -40,9 +40,9 @@ export function TopNav() {
                 />
               )}
           </div>
-          <button onClick={async () => { await signOut(); closeMenu(); }}>
+            <Button onClick={async () => { await signOut(); closeMenu(); }} className="border border-main bg-primary font-bold text-white hover:bg-orange-900 hover:border-none">
               Sign Out
-            </button>
+            </Button>
         </SignedIn>
         <SignedOut>
           <Link href="/sign-in">
