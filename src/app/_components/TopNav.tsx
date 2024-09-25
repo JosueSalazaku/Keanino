@@ -29,7 +29,20 @@ export function TopNav() {
           <Link href="/people">People</Link>
           <Link href="/places">Places</Link>
           <Link href="/pages">Pages</Link>
-          <UserButton showName={true} defaultOpen={false} />
+          <div className="flex items-center space-x-4">
+              {user?.imageUrl && (
+                <Image
+                  src={user?.imageUrl || "/default-profile.png"}
+                  alt="User Picture"
+                  width={48}
+                  height={48}
+                  className="rounded-full"
+                />
+              )}
+          </div>
+          <button onClick={async () => { await signOut(); closeMenu(); }}>
+              Sign Out
+            </button>
         </SignedIn>
         <SignedOut>
           <Link href="/sign-in">
