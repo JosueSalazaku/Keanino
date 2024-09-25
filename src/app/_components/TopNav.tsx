@@ -4,30 +4,14 @@ import { SignedIn, SignedOut, UserButton, useAuth, useUser } from "@clerk/nextjs
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
-import type { User } from "~/types";
-import axios from "axios";
 import Image from 'next/image';
-
 
 export function TopNav() {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
   const { signOut } = useAuth();
-  const { user } = useUser(); // Clerk user
-
-
-
-  async function updateUserData(user: User): Promise<User | undefined> {
-    try {
-      const { id, username, imageUrl } = user;
-      const response = await axios.put(`/api/users/${id}`, { username, imageUrl });
-      return response.data as User;
-    } catch (error) {
-      console.error("Error updating user data:", error);
-      return undefined;
-    }
-  }
+  const { user } = useUser(); 
 
   return (
     <nav className="flex h-20 w-full items-center justify-between bg-primary px-14">
@@ -58,17 +42,21 @@ export function TopNav() {
       </div>
 
       {isOpen && (
-        <div className="absolute rounded-b-lg top-20 h-screen left-0 right-0 z-50 bg-orange-400 flex flex-col justify-start pt-24 gap-20 items-center text-6xl text-main md:hidden">
+        <div
+          className={`absolute rounded-b-lg top-20 h-screen left-0 right-0 z-50 bg-orange-400 flex flex-col justify-start pt-24 gap-20 items-center text-6xl text-main md:hidden transition-opacity duration-300 ${
+            isOpen ? "opacity-100" : "opacity-0"
+          }`}
+        >
           <SignedIn>
             <div className="flex items-center space-x-4">
               {user?.imageUrl && (
                 <Image
-                  src={user?.imageUrl || '/default-profile.png'} 
+                  src={user?.imageUrl || "/default-profile.png"}
                   alt="User Picture"
-                  width={48}  
-                  height={48} 
+                  width={48}
+                  height={48}
                   className="rounded-full"
-                  />
+                />
               )}
               <span>{user?.username ?? "User"}</span>
             </div>
@@ -84,7 +72,9 @@ export function TopNav() {
             <Link href="/pages" onClick={closeMenu} className="hover:underline">
               Pages
             </Link>
-            <button onClick={async () => { await signOut(); closeMenu(); }}>Sign Out</button>
+            <button onClick={async () => { await signOut(); closeMenu(); }}>
+              Sign Out
+            </button>
           </SignedIn>
           <SignedOut>
             <Link href="/sign-in">
