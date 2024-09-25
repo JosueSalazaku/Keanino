@@ -16,8 +16,8 @@ export function TopNav() {
       <Link href="/" className="font-didot text-2xl font-bold text-main">
         Keanino
       </Link>
-      <button onClick={toggle} className="md:hidden text-white">
-        {isOpen ? <HiOutlineX /> : <HiOutlineMenu />}
+      <button onClick={toggle} className="md:hidden  text-white">
+        {isOpen ? <HiOutlineX className='size-7' /> : <HiOutlineMenu className='size-7' />}
       </button>
       <div className="hidden md:flex flex-row items-center text-white space-x-6">
         <SignedIn>
