@@ -14,7 +14,7 @@ export interface User {
   username: string;
   email: string;
   clerkId: string;
-  picture: string;
+  imageUrl: string;
 }
 
 export interface Comment {

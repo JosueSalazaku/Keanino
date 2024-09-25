@@ -12,6 +12,15 @@ const config = {
     eslint: {
         ignoreDuringBuilds: true,
     },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'img.clerk.com',
+                pathname: '**', // Allow any path from this domain
+            },
+        ],
+    },
 };
 
 export default config;
