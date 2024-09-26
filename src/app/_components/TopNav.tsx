@@ -4,6 +4,11 @@ import { SignedIn, SignedOut, useAuth, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
+import { IoSettingsOutline } from "react-icons/io5";
+import { RiLogoutBoxRLine } from "react-icons/ri";
+import { GoBookmark } from "react-icons/go";
+import { GoPerson } from "react-icons/go";
+
 import Image from 'next/image';
 
 export function TopNav() {
@@ -30,15 +35,16 @@ export function TopNav() {
           <Link href="/places">Places</Link>
           <Link href="/pages">Pages</Link>
             {isOpen && (
-            <div className="absolute top-16 right-4 flex flex-col  p-7 gap-3 bg-white text-black w-52 h-60 shadow-lg rounded-lg">
-              <Link href='/profile'>Profile</Link>
-              <Link href='/library'>Library</Link>
-              <Link href='/'>Settings</Link>
+            <div className="absolute top-16 right-4 flex flex-col  p-7 gap-5 bg-white text-black w-52 h-60 shadow-lg rounded-lg">
+              <Link href='/profile' className="flex flex-row items-center gap-4"><GoPerson /> Profile</Link>
+              <Link href='/library' className="flex flex-row items-center gap-4"><GoBookmark /> Library</Link>
+              <Link href='/settings' className="flex flex-row items-center gap-4"><IoSettingsOutline /> Settings</Link>
               <button 
                 onClick={async () => { await signOut(); closeMenu(); }} 
-                className=" bg-none text-black font-bold justify-start items-start rounded-none hover:bg-orange-900 hover:border-none hover:text-white text-left"
+                className=" bg-none text-black font-bold justify-start flex pt-2 flex-row gap-4 items-start rounded-none hover:bg-orange-900 hover:border-none hover:text-white text-left"
               >
-                Sign Out
+               <RiLogoutBoxRLine />
+               Sign Out
               </button>
             </div>
             )}
