@@ -83,10 +83,10 @@ export default function CreatePost() {
         {error && <p className="text-red-500">{error}</p>}
         <Button
           type="submit"
-          className={`w-full md:w-[200px] h-[50px] bg-primary text-white text-xl font-semibold rounded-lg ${isSubmitting ? 'opacity-70' : ''}`}
+          className={`w-full md:w-[200px] h-[50px] bg-primary text-white text-xl font-normal rounded-lg ${isSubmitting ? 'opacity-70' : ''}`}
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Submitting...' : id ? 'Update Post' : 'Create Post'}
+          {isSubmitting ? 'Submitting...' : id ? 'Update Post' : 'Publish'}
         </Button>
       </form>
     </div>
