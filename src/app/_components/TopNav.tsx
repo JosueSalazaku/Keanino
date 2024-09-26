@@ -4,6 +4,11 @@ import { SignedIn, SignedOut, useAuth, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
+import { IoSettingsOutline } from "react-icons/io5";
+import { RiLogoutBoxRLine } from "react-icons/ri";
+import { GoBookmark } from "react-icons/go";
+import { GoPerson } from "react-icons/go";
+
 import Image from 'next/image';
 
 export function TopNav() {
@@ -14,7 +19,7 @@ export function TopNav() {
   const { user } = useUser(); 
 
   return (
-    <nav className="flex h-20 w-full items-center justify-between bg-primary px-14">
+    <nav className="flex h-20 w-full items-center justify-between bg-primary px-5">
       <Link href="/" className="font-didot text-3xl font-bold text-main">
         Keanino
       </Link>
@@ -29,20 +34,32 @@ export function TopNav() {
           <Link href="/people">People</Link>
           <Link href="/places">Places</Link>
           <Link href="/pages">Pages</Link>
-          <div className="flex items-center space-x-4">
+            {isOpen && (
+            <div className="absolute top-16 right-4 flex flex-col  p-7 gap-5 bg-white text-black w-52 h-60 shadow-lg rounded-lg">
+              <Link href='/profile' className="flex flex-row items-center gap-4"><GoPerson /> Profile</Link>
+              <Link href='/library' className="flex flex-row items-center gap-4"><GoBookmark /> Library</Link>
+              <Link href='/settings' className="flex flex-row items-center gap-4"><IoSettingsOutline /> Settings</Link>
+              <button 
+                onClick={async () => { await signOut(); closeMenu(); }} 
+                className=" bg-none text-black font-bold justify-start flex pt-2 flex-row gap-4 items-start rounded-none hover:bg-orange-900 hover:border-none hover:text-white text-left"
+              >
+               <RiLogoutBoxRLine />
+               Sign Out
+              </button>
+            </div>
+            )}
+            <div className="flex items-center space-x-4">
               {user?.imageUrl && (
-                <Image
-                  src={user?.imageUrl || "/default-profile.png"}
-                  alt="User Picture"
-                  width={48}
-                  height={48}
-                  className="rounded-full"
-                />
+              <Image
+                src={user?.imageUrl || "/default-profile.png"}
+                alt="User Picture"
+                width={48}
+                height={48}
+                className="rounded-full cursor-pointer"
+                onClick={toggle}
+              />
               )}
-          </div>
-            <Button onClick={async () => { await signOut(); closeMenu(); }} className="border border-main bg-primary font-bold text-white hover:bg-orange-900 hover:border-none">
-              Sign Out
-            </Button>
+            </div>
         </SignedIn>
         <SignedOut>
           <Link href="/sign-in">
