@@ -4,7 +4,7 @@
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+// import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
@@ -62,27 +62,33 @@ export default function CreatePost() {
   }
 
   return (
-    <form onSubmit={handlePost} className="w-full h-full flex flex-col justify-center items-center space-y-8 p-4">
-      <Input
-        value={submitTitle}
-        onChange={(event) => setSubmitTitle(event.target.value)}
-        className="w-full md:w-[500px] h-[60px] text-black text-2xl"
-        placeholder="Enter post title"
-      />
-      <Textarea
-        value={submitContent}
-        onChange={(event) => setSubmitContent(event.target.value)}
-        className="w-full md:w-[500px] h-[360px] text-black text-2xl"
-        placeholder="Enter post content"
-      />
-      {error && <p className="text-red-500">{error}</p>}
-      <Button
-        type="submit"
-        className="w-full md:w-[120px] h-[45px] bg-white text-primary text-2xl font-bold"
-        disabled={isSubmitting}
+    <div className="w-full flex justify-center mt-8">
+      <form 
+        onSubmit={handlePost} 
+        className="w-screen h-fit  flex flex-col space-y-6 p-4 bg-white text-black shadow-lg rounded-lg"
       >
-         {isSubmitting ? 'Submitting...' : id ? 'Update Post' : 'Create Post'}
-      </Button>
-    </form>
+        <Textarea
+          value={submitTitle}
+          onChange={(event) => setSubmitTitle(event.target.value)}
+          className="w-full text-4xl font-bold border-none focus:outline-none placeholder-orange-400 py-4 border-b border-black"
+          placeholder="Title"
+        />
+
+        <Textarea
+          value={submitContent}
+          onChange={(event) => setSubmitContent(event.target.value)}
+          className="w-full h-[500px] text-xl leading-relaxed border-none focus:outline-none placeholder-gray-500"
+          placeholder="Write your story..."
+        />
+        {error && <p className="text-red-500">{error}</p>}
+        <Button
+          type="submit"
+          className={`w-full md:w-[200px] h-[50px] bg-primary text-white text-xl font-semibold rounded-lg ${isSubmitting ? 'opacity-70' : ''}`}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Submitting...' : id ? 'Update Post' : 'Create Post'}
+        </Button>
+      </form>
+    </div>
   );
 }

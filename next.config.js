@@ -13,13 +13,7 @@ const config = {
         ignoreDuringBuilds: true,
     },
     images: {
-        remotePatterns: [
-            {
-                protocol: 'https',
-                hostname: 'img.clerk.com',
-                pathname: '**', // Allow any path from this domain
-            },
-        ],
+        domains: ['img.clerk.com'], // Allow Clerk image domain
     },
 };
 
