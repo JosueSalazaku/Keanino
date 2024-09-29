@@ -8,7 +8,6 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { GoBookmark } from "react-icons/go";
 import { GoPerson } from "react-icons/go";
-
 import Image from 'next/image';
 
 export function TopNav() {
@@ -16,13 +15,15 @@ export function TopNav() {
   const toggle = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
   const { signOut } = useAuth();
-  const { user } = useUser(); 
+  const { user } = useUser();
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        closeMenu();
+        setTimeout(() => {
+          closeMenu();
+        }, 150);
       }
     };
 
@@ -48,22 +49,25 @@ export function TopNav() {
           <Link href="/people">People</Link>
           <Link href="/places">Places</Link>
           <Link href="/pages">Pages</Link>
-            {isOpen && (
+          {isOpen && (
             <div ref={menuRef} className="absolute top-16 right-4 flex flex-col  p-7 gap-5 bg-white text-black w-52 h-60 shadow-lg rounded-lg">
               <Link href='/profile' onClick={closeMenu} className="flex flex-row items-center gap-4"><GoPerson /> Profile</Link>
               <Link href='/library' onClick={closeMenu} className="flex flex-row items-center gap-4"><GoBookmark /> Library</Link>
               <Link href='/settings' onClick={closeMenu} className="flex flex-row items-center gap-4"><IoSettingsOutline /> Settings</Link>
               <button 
-                onClick={async () => { await signOut(); closeMenu(); }} 
-                className=" bg-none text-black font-bold justify-start flex pt-2 flex-row gap-4 items-start rounded-none hover:bg-orange-900 hover:border-none hover:text-white text-left"
+                onClick={async () => { 
+                  await signOut(); 
+                  closeMenu(); 
+                }} 
+                className="bg-none text-black font-bold justify-start flex pt-2 flex-row gap-4 items-start rounded-none hover:bg-orange-900 hover:border-none hover:text-white text-left"
               >
                <RiLogoutBoxRLine />
                Sign Out
               </button>
             </div>
-            )}
-            <div className="flex items-center space-x-4">
-              {user?.imageUrl && (
+          )}
+          <div className="flex items-center space-x-4">
+            {user?.imageUrl && (
               <Image
                 src={user?.imageUrl || "/default-profile.png"}
                 alt="User Picture"
@@ -72,8 +76,8 @@ export function TopNav() {
                 className="rounded-full cursor-pointer"
                 onClick={toggle}
               />
-              )}
-            </div>
+            )}
+          </div>
         </SignedIn>
         <SignedOut>
           <Link href="/sign-in">
@@ -117,7 +121,10 @@ export function TopNav() {
             <Link href="/pages" onClick={closeMenu} className="hover:underline">
               Pages
             </Link>
-            <button onClick={async () => { await signOut(); closeMenu(); }}>
+            <button onClick={async () => { 
+              await signOut(); 
+              closeMenu(); 
+            }}>
               Sign Out
             </button>
           </SignedIn>
