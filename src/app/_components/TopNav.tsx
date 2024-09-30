@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { SignedIn, SignedOut, useAuth, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
@@ -15,6 +15,7 @@ export function TopNav() {
   const toggle = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
   const { signOut } = useAuth();
+  const { user } = useUser(); 
   const { user } = useUser();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -35,7 +36,7 @@ export function TopNav() {
 
   return (
     <nav className="flex h-20 w-full items-center justify-between bg-primary px-5">
-      <Link href="/" onClick={closeMenu} className="font-didot text-3xl font-bold text-main">
+      <Link href="/" className="font-didot text-3xl font-bold text-main">
         Keanino
       </Link>
       <button onClick={toggle} className="md:hidden text-white">
@@ -49,11 +50,11 @@ export function TopNav() {
           <Link href="/people">People</Link>
           <Link href="/places">Places</Link>
           <Link href="/pages">Pages</Link>
-          {isOpen && (
-            <div ref={menuRef} className="absolute top-16 right-4 flex flex-col  p-7 gap-5 bg-white text-black w-52 h-60 shadow-lg rounded-lg">
-              <Link href='/profile' onClick={closeMenu} className="flex flex-row items-center gap-4"><GoPerson /> Profile</Link>
-              <Link href='/library' onClick={closeMenu} className="flex flex-row items-center gap-4"><GoBookmark /> Library</Link>
-              <Link href='/settings' onClick={closeMenu} className="flex flex-row items-center gap-4"><IoSettingsOutline /> Settings</Link>
+            {isOpen && (
+            <div className="absolute top-16 right-4 flex flex-col  p-7 gap-5 bg-white text-black w-52 h-60 shadow-lg rounded-lg">
+              <Link href='/profile' className="flex flex-row items-center gap-4"><GoPerson /> Profile</Link>
+              <Link href='/library' className="flex flex-row items-center gap-4"><GoBookmark /> Library</Link>
+              <Link href='/settings' className="flex flex-row items-center gap-4"><IoSettingsOutline /> Settings</Link>
               <button 
                 onClick={async () => { 
                   await signOut(); 
@@ -91,7 +92,6 @@ export function TopNav() {
 
       {isOpen && (
         <div
-          ref={menuRef}
           className={`absolute rounded-b-lg top-20 h-screen left-0 right-0 z-50 bg-orange-400 flex flex-col justify-start pt-24 gap-20 items-center text-6xl text-main md:hidden transition-opacity duration-300 ${
             isOpen ? "opacity-100" : "opacity-0"
           }`}
