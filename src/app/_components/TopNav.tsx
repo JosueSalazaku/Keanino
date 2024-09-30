@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { SignedIn, SignedOut, useAuth, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
@@ -16,12 +16,11 @@ export function TopNav() {
   const closeMenu = () => setIsOpen(false);
   const { signOut } = useAuth();
   const { user } = useUser(); 
-  const { user } = useUser();
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (menuRef.current && event.target instanceof Node && !menuRef.current.contains(event.target)) {
         setTimeout(() => {
           closeMenu();
         }, 150);
