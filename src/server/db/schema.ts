@@ -19,14 +19,12 @@ export const users = createTable('users', {
 export const posts = createTable('posts', {
   id: uuid('id').primaryKey().defaultRandom(), 
   title: text('title').notNull(),
-  userId: text('user_id').notNull(),
   content: text('content').notNull(),
   pictureUrl: varchar('picture_url', { length: 2048 }),
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
 }, (table) => ({
   titleIndex: index('title_idx').on(table.title),
-  userIndex: index('user_idx').on(table.userId),
 }));
 
 export const comments = createTable('comments', {
