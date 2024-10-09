@@ -9,17 +9,18 @@ export const users = createTable('users', {
   firstName: varchar('firstName', { length: 255 }).notNull(),
   username: varchar('username', { length: 255 }).notNull().unique(),
   email: varchar('email', { length: 255 }).notNull().unique(),
-  clerkId: text('clerk_id').notNull(),
+  clerkId: text('clerk_id').notNull().unique(), // Ensure clerkId is unique
   pictureUrl: text('picture_url').notNull(),
   role: varchar('role', { length: 50 }).default('user').notNull(),
 }, (table) => ({
   emailIndex: uniqueIndex('emailIndex').on(table.email),
+  clerkIdUniqueIndex: uniqueIndex('clerk_id_unique').on(table.clerkId), 
 }));
 
 export const posts = createTable('posts', {
-  id: uuid('id').primaryKey().defaultRandom(), 
+  id: uuid('id').primaryKey().defaultRandom(),
   title: text('title').notNull(),
-  userId: text('user_id').notNull(),
+  userId: text('user_id').notNull().references(() => users.clerkId), // Foreign key references clerkId in users table
   content: text('content').notNull(),
   pictureUrl: text('picture_url'),
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),

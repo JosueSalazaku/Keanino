@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX IF NOT EXISTS "clerk_id_unique" ON "users" ("clerk_id");
