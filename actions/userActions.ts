@@ -1,11 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
 import { eq } from "drizzle-orm";
 import { db } from "../src/server/db/index"
 import { users } from "../src/server/db/schema"
-
+import type { User } from "~/types"; 
 
 export const getAllUsers = async () => {
     try {
@@ -29,7 +26,7 @@ export const getUser = async (userId: string) => {
   }
 };
 
-export const addUser = async (user: any) => {
+export const addUser = async (user: User) => {
     try {
       const result = await db
         .insert(users)
@@ -39,7 +36,7 @@ export const addUser = async (user: any) => {
           username: user?.username,
           email: user?.email,
           clerkId: user?.clerkId,
-          picture: user?.picture,
+          pictureUrl: user?.pictureUrl,
         })
         .returning({ clerkClientId: users.clerkId }); 
   
