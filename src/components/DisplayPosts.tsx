@@ -19,6 +19,8 @@ export default function DisplayPosts() {
       try {
         const response = await axios.get<Post[]>("/api/posts");
         const data = response.data;
+
+        // Assuming `data` contains `pictureUrl` from Clerk's profile
         setShowPosts(data);
       } catch (error) {
         if (axios.isAxiosError(error)) {

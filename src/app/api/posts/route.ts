@@ -13,7 +13,7 @@ export async function GET() {
         content: posts.content,
         userId: posts.userId,
         username: users.username,
-        pictureUrl: posts.pictureUrl,
+        pictureUrl: users.pictureUrl,
       })
       .from(posts)
       .leftJoin(users, eq(posts.userId, users.clerkId));
