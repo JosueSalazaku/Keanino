@@ -148,6 +148,20 @@
       "when": 1727716310792,
       "tag": "0020_past_beyonder",
       "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "6",
+      "when": 1727717441130,
+      "tag": "0021_fast_doomsday",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "6",
+      "when": 1727717474425,
+      "tag": "0022_stiff_gauntlet",
+      "breakpoints": true
     }
   ]
 }

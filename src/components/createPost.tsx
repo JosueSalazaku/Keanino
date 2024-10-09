@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
 "use client";
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from "./ui/button";
+// import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
@@ -12,8 +15,8 @@ export default function CreatePost() {
   const initialTitle = searchParams.get('title');
   const initialContent = searchParams.get('content');
 
-  const [submitTitle, setSubmitTitle] = useState<string>(initialTitle! || "");
-  const [submitContent, setSubmitContent] = useState<string>(initialContent! || "");  
+  const [submitTitle, setSubmitTitle] = useState<string>(initialTitle || "");
+  const [submitContent, setSubmitContent] = useState<string>(initialContent || "");  
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,7 +25,7 @@ export default function CreatePost() {
   async function handlePost(event: React.FormEvent) {
     event.preventDefault();
 
-    if (!user?.id) {
+    if (!user || !user.id) {
       setError("User not authenticated.");
       return;
     }
