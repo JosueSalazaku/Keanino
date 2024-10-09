@@ -64,3 +64,7 @@ export interface Media {
   url: string,
   mediatype: string
 }
+
+export interface PageParams {
+  id: string;
+}
