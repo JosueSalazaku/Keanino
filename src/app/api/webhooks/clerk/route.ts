@@ -3,20 +3,7 @@ import { Webhook } from 'svix';
 import { headers } from 'next/headers';
 import { db } from '~/server/db'; 
 import { users } from '~/server/db/schema'; 
-
-interface ClerkUserEventData {
-  id: string;
-  email_addresses: { email_address: string }[];
-  first_name: string | null;
-  last_name: string | null;
-  username: string | null;
-  image_url: string | null;
-}
-
-interface ClerkWebhookEvent {
-  type: string;
-  data: ClerkUserEventData;
-}
+import type { ClerkUserEventData, ClerkWebhookEvent } from '~/types'
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;

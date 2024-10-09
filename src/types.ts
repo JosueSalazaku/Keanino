@@ -17,6 +17,20 @@ export interface User {
   pictureUrl: string;
 }
 
+export interface ClerkUserEventData {
+  id: string;
+  email_addresses: { email_address: string }[];
+  first_name: string | null;
+  last_name: string | null;
+  username: string | null;
+  image_url: string | null;
+}
+
+export interface ClerkWebhookEvent {
+  type: string;
+  data: ClerkUserEventData;
+}
+
 export interface Comment {
   id?: string;
   postId: string;
