@@ -10,7 +10,7 @@ export const users = createTable('users', {
   username: varchar('username', { length: 255 }).notNull().unique(),
   email: varchar('email', { length: 255 }).notNull().unique(),
   clerkId: text('clerk_id').notNull(),
-  imageUrl: text('image_url').notNull(),
+  pictureUrl: text('picture_url').notNull(),
   role: varchar('role', { length: 50 }).default('user').notNull(),
 }, (table) => ({
   emailIndex: uniqueIndex('emailIndex').on(table.email),

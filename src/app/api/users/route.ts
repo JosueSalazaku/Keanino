@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextResponse } from "next/server";
 import { db } from "~/server/db"; 
 import { users } from "~/server/db/schema"; 
+import type { User } from "~/types"; 
+
 
 export async function GET() {
   try {
@@ -14,9 +14,18 @@ export async function GET() {
   }
 }
 
+// POST: Create a new user
 export async function POST(request: Request) {
   try {
-    const user = await request.json();
+    // Validate and parse the request body
+    const user: User = await request.json() as User;
+
+    // Validate incoming data before inserting into the database
+    if (!user.name || !user.firstName || !user.username || !user.email || !user.clerkId || !user.pictureUrl) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
+
+    // Insert user into the database
     const result = await db
       .insert(users)
       .values({
@@ -25,10 +34,11 @@ export async function POST(request: Request) {
         username: user.username,
         email: user.email,
         clerkId: user.clerkId,
-        picture: user.picture,
+        pictureUrl: user.pictureUrl,
       })
       .returning({ clerkClientId: users.clerkId });
 
+    // Return the inserted user or success response
     return NextResponse.json(result);
   } catch (error) {
     console.error("Error adding new user:", error);
