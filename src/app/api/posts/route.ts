@@ -16,11 +16,10 @@ export async function GET() {
         pictureUrl: posts.pictureUrl,
       })
       .from(posts)
-      .innerJoin(users, eq(posts.userId, users.clerkId)); 
+      .leftJoin(users, eq(posts.userId, users.clerkId));
 
     console.log('Fetched posts with user info:', data);
 
-    // Return the fetched data
     return NextResponse.json(data);
   } catch (error) {
     console.error('Error fetching posts:', error);
@@ -28,7 +27,7 @@ export async function GET() {
   }
 }
 
-// Handler for POST /api/posts
+
 export async function POST(req: Request) {
   try {
     const { title, content, userId } = await req.json() as Post;
@@ -37,11 +36,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const newPost = await db.insert(posts).values({
+    const [newPost] = await db.insert(posts).values({
       title,
       content,
       userId, 
-    });
+    }).returning();
 
     return NextResponse.json({ message: "Post created successfully", post: newPost });
   } catch (error) {
@@ -49,3 +48,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Error adding new post" }, { status: 500 });
   }
 }
+
