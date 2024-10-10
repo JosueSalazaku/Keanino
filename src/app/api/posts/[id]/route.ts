@@ -38,18 +38,14 @@ export async function PUT(
     const { id } = params;
     const updates: Partial<Post> = await request.json() as Post;
 
-    // Get the current authenticated user from Clerk
     const { userId } = getAuth(request);
-
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     // Fetch the post to check ownership
     const post = await db
-      .select({
-        userId: posts.userId,
-      })
+      .select({ userId: posts.userId })
       .from(posts)
       .where(eq(posts.id, id))
       .limit(1);
@@ -58,15 +54,21 @@ export async function PUT(
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });
     }
 
-    // Check if the current user is the owner of the post
+    // Ensure the user is the owner of the post
     if (!post[0] || post[0].userId !== userId) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    // Perform the update if the user is the owner
+    // Remove createdAt from updates since it should not be changed
+    const { createdAt, ...restUpdates } = updates;
+
+    // Update updatedAt with the current timestamp
     const updatedPost = await db
       .update(posts)
-      .set(updates)
+      .set({
+        ...restUpdates,
+        updatedAt: new Date(), // Ensure updatedAt is a valid Date object or SQL
+      })
       .where(eq(posts.id, id))
       .returning();
 
@@ -80,6 +82,7 @@ export async function PUT(
     return NextResponse.json({ error: 'Error updating post' }, { status: 500 });
   }
 }
+
 
 // DELETE method to delete a post by ID
 export async function DELETE(

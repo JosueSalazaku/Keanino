@@ -5,6 +5,8 @@ export interface Post {
   userId: string,
   username: string,
   pictureUrl: string,
+  createdAt: string,
+  updatedAt: string,
 }
 
 export interface User { 
