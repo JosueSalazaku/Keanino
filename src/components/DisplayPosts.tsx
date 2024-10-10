@@ -8,7 +8,7 @@ import DeletePostButton from './deletePostButton';
 import { Button } from './ui/button';
 import Image from 'next/image'; 
 import Link from 'next/link'; 
-import { format, isToday, isYesterday } from 'date-fns';
+import { format } from 'date-fns';
 
 
 export default function DisplayPosts() {
