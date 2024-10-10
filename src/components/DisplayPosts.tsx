@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import DeletePostButton from './deletePostButton';
 import { Button } from './ui/button';
 import Image from 'next/image'; 
+import Link from 'next/link'; // Import next/link for dynamic routing
 
 export default function DisplayPosts() {
   const [showPosts, setShowPosts] = useState<Post[]>([]);
@@ -20,7 +21,6 @@ export default function DisplayPosts() {
         const response = await axios.get<Post[]>("/api/posts");
         const data = response.data;
 
-        // Assuming `data` contains `pictureUrl` from Clerk's profile
         setShowPosts(data);
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -63,6 +63,11 @@ export default function DisplayPosts() {
             </div>
             <h2 className="text-xl text-primary font-bold mb-2">{post.title}</h2>
             <p className="text-gray-700 mb-4">{post.content}</p>
+
+            {/* Link to the dynamic post page */}
+            <Link href={`/posts/${post.id}`}>
+              <h1 className="text-blue-500 underline">View Post</h1>
+            </Link>
 
             {/* Only show Edit/Delete buttons if the logged-in user is the owner of the post */}
             {post.userId === user?.id && (

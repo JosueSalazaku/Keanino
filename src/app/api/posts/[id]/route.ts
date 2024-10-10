@@ -125,7 +125,7 @@ export async function DELETE(
     }
 
     console.log('Deleted post:', deletedPost[0]);
-    return NextResponse.json({ message: 'Post deleted successfully' });
+    return NextResponse.json({ message: 'Post deleted successfully', deletedPost: deletedPost[0] });
   } catch (error) {
     console.error('Error deleting post:', error);
     return NextResponse.json({ error: 'Error deleting post' }, { status: 500 });
