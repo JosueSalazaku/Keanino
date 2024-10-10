@@ -23,6 +23,7 @@ export const posts = createTable('posts', {
   userId: text('user_id').notNull().references(() => users.clerkId), // Foreign key references clerkId in users table
   content: text('content').notNull(),
   pictureUrl: text('picture_url'),
+  imageUrl: text('image_url'),
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
 }, (table) => ({
