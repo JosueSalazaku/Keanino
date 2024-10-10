@@ -74,6 +74,7 @@ export default function DisplayPosts() {
                 <p className="text-gray-700 line-clamp-3">  
                   {post.content}
                 </p>
+                <p className="text-gray-700">{post.createdAt }</p>
               </div>
             </Link>
 

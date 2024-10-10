@@ -14,6 +14,8 @@ export async function GET() {
         userId: posts.userId,
         username: users.username,
         pictureUrl: users.pictureUrl,
+        createdAt: posts.createdAt,
+        updatedAt: posts.updatedAt
       })
       .from(posts)
       .leftJoin(users, eq(posts.userId, users.clerkId));
