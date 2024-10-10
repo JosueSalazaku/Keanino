@@ -71,3 +71,21 @@ export interface Media {
 export interface PageParams {
   id: string;
 }
+
+export interface FormFields {
+  title: string;
+  content: string;
+  userId: string;
+}
+
+export interface UploadedFile {
+  filepath: string;
+  originalFilename: string;
+}
+
+export interface FormData {
+  fields: FormFields;
+  files: {
+    image?: UploadedFile;
+  };
+}

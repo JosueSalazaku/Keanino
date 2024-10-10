@@ -1,8 +1,17 @@
 import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { db } from '~/server/db';
 import { posts, users } from '~/server/db/schema'; 
-import type { Post } from '../../../types';
 import { eq } from 'drizzle-orm';
+import { nanoid } from 'nanoid';
+import { promises as fs } from 'fs';
+import path from 'path';
+
+export const config = {
+  api: {
+    bodyParser: false, // Disable body parsing for form-data
+  },
+};
 
 export async function GET() {
   try {
@@ -14,13 +23,12 @@ export async function GET() {
         userId: posts.userId,
         username: users.username,
         pictureUrl: users.pictureUrl,
+        imageUrl: posts.imageUrl,
         createdAt: posts.createdAt,
-        updatedAt: posts.updatedAt
+        updatedAt: posts.updatedAt,
       })
       .from(posts)
       .leftJoin(users, eq(posts.userId, users.clerkId));
-
-    console.log('Fetched posts with user info:', data);
 
     return NextResponse.json(data);
   } catch (error) {
@@ -29,25 +37,46 @@ export async function GET() {
   }
 }
 
-
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const { title, content, userId } = await req.json() as Post;
-    
+    const formData = await req.formData();
+    const title = formData.get('title') as string;
+    const content = formData.get('content') as string;
+    const userId = formData.get('userId') as string;
+
     if (!title || !content || !userId) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
+    // Ensure the upload directory exists
+    const uploadDir = path.join(process.cwd(), 'public/uploads');
+    await fs.mkdir(uploadDir, { recursive: true });
+
+    // File handling
+    const file = formData.get('image') as Blob | null;
+    let imageUrl = '';
+
+    if (file && file instanceof Blob) {
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      const fileName = `${nanoid()}.png`;
+      const filePath = path.join(uploadDir, fileName);
+
+      await fs.writeFile(filePath, buffer);
+      imageUrl = `/uploads/${fileName}`;
+    }
+
+    // Insert the new post into the database
     const [newPost] = await db.insert(posts).values({
       title,
       content,
-      userId, 
+      userId,
+      imageUrl,
     }).returning();
 
-    return NextResponse.json({ message: "Post created successfully", post: newPost });
+    return NextResponse.json({ message: 'Post created successfully', post: newPost });
   } catch (error) {
-    console.error("Error adding new post:", error);
-    return NextResponse.json({ error: "Error adding new post" }, { status: 500 });
+    console.error('Error creating post:', error);
+    return NextResponse.json({ error: 'Error creating post' }, { status: 500 });
   }
 }
-

@@ -3,8 +3,9 @@ import type { NextRequest } from 'next/server';
 import { db } from '~/server/db';
 import { posts } from '~/server/db/schema'; 
 import { eq } from 'drizzle-orm';
-import type { Post } from '~/types';
 import { getAuth } from '@clerk/nextjs/server';
+import { nanoid } from 'nanoid';
+import { promises as fs } from 'fs';
 
 // GET method to fetch a post by ID
 export async function GET(
@@ -36,16 +37,22 @@ export async function PUT(
 ) {
   try {
     const { id } = params;
-    const updates: Partial<Post> = await request.json() as Post;
 
+    // Ensure user authentication
     const { userId } = getAuth(request);
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Fetch the post to check ownership
+    // Parse the form data
+    const formData = await request.formData();
+    const title = formData.get('title') as string;
+    const content = formData.get('content') as string;
+    const imageFile = formData.get('image') as Blob | null;
+
+    // Fetch the post to ensure it exists and the user is the owner
     const post = await db
-      .select({ userId: posts.userId })
+      .select({ userId: posts.userId, imageUrl: posts.imageUrl })
       .from(posts)
       .where(eq(posts.id, id))
       .limit(1);
@@ -54,27 +61,34 @@ export async function PUT(
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });
     }
 
-    // Ensure the user is the owner of the post
+    // Ensure the current user is the owner of the post
     if (!post[0] || post[0].userId !== userId) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    // Remove createdAt from updates since it should not be changed
-    const { createdAt, ...restUpdates } = updates;
+    // Handle image upload if provided
+    let imageUrl: string | null = post[0].imageUrl; // Keep current image if none provided
+    if (imageFile && imageFile instanceof Blob) {
+      const arrayBuffer = await imageFile.arrayBuffer();
+      const fileName = `${nanoid()}.png`;
+      const filePath = `./public/uploads/${fileName}`;
+      const buffer = Buffer.from(arrayBuffer);
+      await fs.writeFile(filePath, buffer);
+      await fs.writeFile(filePath, buffer);
+      imageUrl = `/uploads/${fileName}`; // Update the imageUrl
+    }
 
-    // Update updatedAt with the current timestamp
+    // Update post details and set updatedAt to current time
     const updatedPost = await db
       .update(posts)
       .set({
-        ...restUpdates,
-        updatedAt: new Date(), // Ensure updatedAt is a valid Date object or SQL
+        title,
+        content,
+        imageUrl,  // If a new image was uploaded, save it
+        updatedAt: new Date(),
       })
       .where(eq(posts.id, id))
       .returning();
-
-    if (updatedPost.length === 0) {
-      return NextResponse.json({ error: 'Post not found' }, { status: 404 });
-    }
 
     return NextResponse.json(updatedPost[0]);
   } catch (error) {
@@ -82,6 +96,7 @@ export async function PUT(
     return NextResponse.json({ error: 'Error updating post' }, { status: 500 });
   }
 }
+
 
 
 // DELETE method to delete a post by ID
