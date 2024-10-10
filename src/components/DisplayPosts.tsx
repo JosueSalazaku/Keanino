@@ -49,14 +49,7 @@ export default function DisplayPosts() {
 
 function formatDate(dateString: string) {
   const date = new Date(dateString);
-
-  if (isToday(date)) {
-    return `Today at ${format(date, 'p')}`; // 'p' is the time format (like 9:34 AM)
-  } else if (isYesterday(date)) {
-    return `Yesterday at ${format(date, 'p')}`;
-  } else {
-    return format(date, 'EEEE at p'); // EEEE is the weekday (e.g., Monday)
-  }
+  return format(date, 'MMM d, HH:mm');  // Formats as "Oct 9, 22:43"
 }
 
 
