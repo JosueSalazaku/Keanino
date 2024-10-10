@@ -30,12 +30,13 @@ export default function CreatePost() {
       return;
     }
 
-    const data = {
-      title: submitTitle,
-      content: submitContent,
-      userId: user.id, 
-      imageUrl: image,
-    };
+    const formData = new FormData();
+    formData.append('title', submitTitle);
+    formData.append('content', submitContent);
+    formData.append('userId', user.id);
+    if (image) {
+      formData.append('image', image); 
+    }
 
     try {
       setIsSubmitting(true);
@@ -44,9 +45,17 @@ export default function CreatePost() {
       let response;
 
       if (id) {
-        response = await axios.put(`/api/posts/${id}`, data);
+        response = await axios.put(`/api/posts/${id}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
       } else {
-        response = await axios.post("/api/posts", data);
+        response = await axios.post("/api/posts", formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
       }
 
       if (response.status === 200) {
@@ -82,11 +91,9 @@ export default function CreatePost() {
           className="w-full text-4xl font-bold border-none focus:outline-none placeholder-orange-400 py-4 border-b border-black"
           placeholder="Title"
         />
-
         <input type="file"  accept='image/*' onChange={handleImageSubmit}/>
         {preview && <Image src={preview} alt="Preview" className="preview-image" width={500} height={500} />}
-
-
+        
         <Textarea
           value={submitContent}
           onChange={(event) => setSubmitContent(event.target.value)}
