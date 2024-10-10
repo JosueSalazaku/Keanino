@@ -7,8 +7,8 @@ import { nanoid } from 'nanoid';
 import { promises as fs } from 'fs';
 import path from 'path';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
 export const preferredRegion = 'auto';
 
 export async function GET() {
