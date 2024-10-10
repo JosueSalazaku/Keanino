@@ -83,7 +83,7 @@ function formatDate(dateString: string) {
                 <p className="text-gray-700 line-clamp-3">  
                   {post.content}
                 </p>
-                <p className="text-gray-700">
+                <p className="text-gray-500 pt-10">
                 Posted: {formatDate(post.createdAt)}
                 </p>
               </div>
