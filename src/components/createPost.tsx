@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
+import Image from 'next/image';
 
 export default function CreatePost() {
   const searchParams = useSearchParams();
@@ -16,6 +17,8 @@ export default function CreatePost() {
   const [submitContent, setSubmitContent] = useState<string>(initialContent ?? "");  
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [image, setImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
 
   const { user } = useUser(); 
 
@@ -31,6 +34,7 @@ export default function CreatePost() {
       title: submitTitle,
       content: submitContent,
       userId: user.id, 
+      imageUrl: image,
     };
 
     try {
@@ -58,6 +62,14 @@ export default function CreatePost() {
     }
   }
 
+  async function handleImageSubmit(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (file) {
+      setImage(file);
+      setPreview(URL.createObjectURL(file));
+    }
+  }
+
   return (
     <div className="w-screen flex justify-center mt-8 px-12">
       <form 
@@ -70,6 +82,10 @@ export default function CreatePost() {
           className="w-full text-4xl font-bold border-none focus:outline-none placeholder-orange-400 py-4 border-b border-black"
           placeholder="Title"
         />
+
+        <input type="file"  accept='image/*' onChange={handleImageSubmit}/>
+        {preview && <Image src={preview} alt="Preview" className="preview-image" width={500} height={500} />}
+
 
         <Textarea
           value={submitContent}
