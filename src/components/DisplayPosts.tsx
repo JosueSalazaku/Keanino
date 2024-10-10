@@ -8,6 +8,8 @@ import DeletePostButton from './deletePostButton';
 import { Button } from './ui/button';
 import Image from 'next/image'; 
 import Link from 'next/link'; 
+import { format, isToday, isYesterday } from 'date-fns';
+
 
 export default function DisplayPosts() {
   const [showPosts, setShowPosts] = useState<Post[]>([]);
@@ -44,6 +46,20 @@ export default function DisplayPosts() {
     router.push(`/write?id=${post.id}&title=${encodeURIComponent(post.title)}&content=${encodeURIComponent(post.content)}`);
   };
 
+
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+
+  if (isToday(date)) {
+    return `Today at ${format(date, 'p')}`; // 'p' is the time format (like 9:34 AM)
+  } else if (isYesterday(date)) {
+    return `Yesterday at ${format(date, 'p')}`;
+  } else {
+    return format(date, 'EEEE at p'); // EEEE is the weekday (e.g., Monday)
+  }
+}
+
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       <h1 className="text-3xl font-bold mb-8 text-center">Display Posts</h1>
@@ -74,7 +90,9 @@ export default function DisplayPosts() {
                 <p className="text-gray-700 line-clamp-3">  
                   {post.content}
                 </p>
-                <p className="text-gray-700">{post.createdAt }</p>
+                <p className="text-gray-700">
+                Posted: {formatDate(post.createdAt)}
+                </p>
               </div>
             </Link>
 
