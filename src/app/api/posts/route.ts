@@ -7,11 +7,9 @@ import { nanoid } from 'nanoid';
 import { promises as fs } from 'fs';
 import path from 'path';
 
-export const config = {
-  api: {
-    bodyParser: false, // Disable body parsing for form-data
-  },
-};
+export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
+export const preferredRegion = 'auto';
 
 export async function GET() {
   try {
