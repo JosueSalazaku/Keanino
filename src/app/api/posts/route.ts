@@ -43,6 +43,7 @@ export async function POST(req: NextRequest) {
     const userId = formData.get('userId') as string;
 
     if (!title || !content || !userId) {
+      console.log('Missing required fields:', { title, content, userId });
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
@@ -55,13 +56,18 @@ export async function POST(req: NextRequest) {
     let imageUrl = '';
 
     if (file && file instanceof Blob) {
-      const arrayBuffer = await file.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-      const fileName = `${nanoid()}.png`;
-      const filePath = path.join(uploadDir, fileName);
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        const fileName = `${nanoid()}.png`;
+        const filePath = path.join(uploadDir, fileName);
 
-      await fs.writeFile(filePath, buffer);
-      imageUrl = `/uploads/${fileName}`;
+        await fs.writeFile(filePath, buffer);
+        imageUrl = `/uploads/${fileName}`;
+      } catch (fileError) {
+        console.error('Error saving file:', fileError);
+        return NextResponse.json({ error: 'File upload failed' }, { status: 500 });
+      }
     }
 
     // Insert the new post into the database
@@ -78,3 +84,4 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Error creating post' }, { status: 500 });
   }
 }
+
