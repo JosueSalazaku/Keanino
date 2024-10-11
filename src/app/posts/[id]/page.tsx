@@ -3,9 +3,10 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'; 
 import type { PageParams, Post } from '~/types';
+import Image from 'next/image'
 
 export default function Page({ params }: { params: PageParams }) {
-    const [post, setPost] = useState<Post | null>(null);
+    const [showPost, setShowPost] = useState<Post | null>(null);
     const [loading, setLoading] = useState<boolean>(true); 
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
@@ -21,7 +22,7 @@ export default function Page({ params }: { params: PageParams }) {
         async function fetchPost() {
             try {
                 const response = await axios.get<Post>(`/api/posts/${params.id}`);
-                setPost(response.data);
+                setShowPost(response.data);
             } catch (error) {
                 if (axios.isAxiosError(error)) {
                     setError(`Failed to fetch post: ${error.response?.status} - ${error.message}`);
@@ -44,14 +45,19 @@ export default function Page({ params }: { params: PageParams }) {
         return <div>Error: {error}</div>;  
     }
 
-    if (!post) {
+    if (!showPost) {
         return <div>No post found.</div>; 
     }
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
-            <p className="text-gray-700 mb-4">{post.content}</p>
+        <div className="container mx-auto p-4 text-white">
+            <div key={showPost.id} className="post">
+                <h1 className="text-3xl font-bold mb-4">{showPost.title}</h1>
+                {showPost.imageUrl && (
+                    <Image src={showPost.imageUrl} alt={showPost.title} width={600} height={400} className="mb-4" />
+                )}
+                <p className="mb-4">{showPost.content}</p>
+            </div>
         </div>
     );
 }
