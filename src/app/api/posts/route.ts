@@ -42,32 +42,10 @@ export async function POST(req: NextRequest) {
     const content = formData.get('content') as string;
     const userId = formData.get('userId') as string;
 
+    // Check if required fields are present
     if (!title || !content || !userId) {
-      console.log('Missing required fields:', { title, content, userId });
+      console.error('Missing required fields:', { title, content, userId });
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
-    }
-
-    // Ensure the upload directory exists
-    const uploadDir = path.join(process.cwd(), 'public/uploads');
-    await fs.mkdir(uploadDir, { recursive: true });
-
-    // File handling
-    const file = formData.get('image') as Blob | null;
-    let imageUrl = '';
-
-    if (file && file instanceof Blob) {
-      try {
-        const arrayBuffer = await file.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
-        const fileName = `${nanoid()}.png`;
-        const filePath = path.join(uploadDir, fileName);
-
-        await fs.writeFile(filePath, buffer);
-        imageUrl = `/uploads/${fileName}`;
-      } catch (fileError) {
-        console.error('Error saving file:', fileError);
-        return NextResponse.json({ error: 'File upload failed' }, { status: 500 });
-      }
     }
 
     // Insert the new post into the database
@@ -75,7 +53,7 @@ export async function POST(req: NextRequest) {
       title,
       content,
       userId,
-      imageUrl,
+      imageUrl: '', // Skip image logic, default to empty string
     }).returning();
 
     return NextResponse.json({ message: 'Post created successfully', post: newPost });
