@@ -3,9 +3,7 @@ import type { NextRequest } from 'next/server';
 import { db } from '~/server/db';
 import { posts, users } from '~/server/db/schema'; 
 import { eq } from 'drizzle-orm';
-import { nanoid } from 'nanoid';
-import { promises as fs } from 'fs';
-import path from 'path';
+
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
