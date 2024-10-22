@@ -56,11 +56,11 @@ export default function Page({ params }: { params: PageParams }) {
     return (
         <div className="container mx-auto p-8 text-white">
             <div key={showPost.id} className="post">
-                <h1 className="text-3xl pt-2 font-bold mb-4">{showPost.title}</h1>
+                <h1 className="text-5xl pt-2 font-bold mb-4">{showPost.title}</h1>
                 {showPost.imageUrl && (
                     <Image src={showPost.imageUrl} alt={showPost.title} width={600} height={400} className="mb-4" />
                 )}
-                <p className="pt-2">{showPost.content}</p>
+                <p className="pt-2 text-xl">{showPost.content}</p>
                 <Button
                   onClick={() => handlePostEdit(showPost)} 
                   className="bg-blue-500 text-white px-4 py-2 rounded mt-12 hover:bg-blue-700"
