@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'; 
 import type { PageParams, Post } from '~/types';
 import Image from 'next/image'
+import { Button } from '~/components/ui/button';
 
 export default function Page({ params }: { params: PageParams }) {
     const [showPost, setShowPost] = useState<Post | null>(null);
@@ -33,9 +34,12 @@ export default function Page({ params }: { params: PageParams }) {
                 setLoading(false);
             }
         }
-
         void fetchPost();  
     }, [params.id, router]);
+
+    const handlePostEdit = (post: Post) => {
+        router.push(`/write?id=${post.id}&title=${encodeURIComponent(post.title)}&content=${encodeURIComponent(post.content)}`);
+      };
 
     if (loading) {
         return <div>Loading...</div>;  
@@ -57,6 +61,13 @@ export default function Page({ params }: { params: PageParams }) {
                     <Image src={showPost.imageUrl} alt={showPost.title} width={600} height={400} className="mb-4" />
                 )}
                 <p className="pt-2">{showPost.content}</p>
+                <Button
+                  onClick={() => handlePostEdit(showPost)} 
+                  className="bg-blue-500 text-white px-4 py-2 rounded mt-12 hover:bg-blue-700"
+                >
+                  Edit
+                </Button>
+
             </div>
         </div>
     );
