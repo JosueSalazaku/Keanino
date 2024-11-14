@@ -3,8 +3,8 @@ import { TopNav } from "~/components/TopNav";
 import "~/styles/globals.css";
 
 export const metadata = {
-  title: "Journo",
-  description: "Write about your Travel journeys!",
+  title: "Keanino",
+  description: "Kelly's Personal Journal",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
