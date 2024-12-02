@@ -49,7 +49,7 @@ export function TopNav() {
           </Link>
           <Link href="/people" className="text-white hover:text-gray-300 transition">People</Link>
           <Link href="/places" className="text-white hover:text-gray-300 transition">Places</Link>
-          <Link href="/pages" className="text-white hover:text-gray-300 transition">Pages</Link>
+          <Link href="/books-pages" className="text-white hover:text-gray-300 transition">Pages</Link>
 
           <div className="relative flex items-center space-x-4">
             {user?.imageUrl && (
@@ -69,9 +69,6 @@ export function TopNav() {
               >
                 <Link href="/profile" className="flex items-center space-x-2 hover:text-primary">
                   <GoPerson /> <span>Profile</span>
-                </Link>
-                <Link href="/library" className="flex items-center space-x-2 hover:text-primary">
-                  <GoBookmark /> <span>Library</span>
                 </Link>
                 <Link href="/settings" className="flex items-center space-x-2 hover:text-primary">
                   <IoSettingsOutline /> <span>Settings</span>
@@ -127,7 +124,7 @@ export function TopNav() {
               <Link href="/places" onClick={closeMenu} className="text-primary hover:text-gray-500 hover:underline hover:text-3xl">
                 Places
               </Link>
-              <Link href="/pages" onClick={closeMenu} className="text-primary hover:text-gray-500 hover:underline hover:text-3xl">
+              <Link href="/books-pages" onClick={closeMenu} className="text-primary hover:text-gray-500 hover:underline hover:text-3xl">
                 Pages
               </Link>
               <button

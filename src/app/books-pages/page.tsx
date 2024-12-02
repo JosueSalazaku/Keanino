@@ -1,4 +1,4 @@
-export default function Page() {
+export default function PagesPage() {
   return (
     <div className="min-h-screen bg-main flex flex-col items-center py-10 px-6">
       <h1 className="text-5xl font-bold text-primary mb-4 text-center">Pages</h1>
