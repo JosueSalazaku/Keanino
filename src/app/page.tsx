@@ -11,7 +11,7 @@ export default function HomePage() {
         </section>
       </SignedIn>
       <SignedOut>
-        <section className="bg relative flex min-h-[50vh] w-full flex-col items-center justify-center px-6 text-center sm:px-12">
+        <section className="bg relative flex min-h-[80vh] w-full flex-col items-center justify-center px-6 text-center sm:px-12">
           {/* Background Decoration */}
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-indigo-400 opacity-30 blur-3xl"></div>
