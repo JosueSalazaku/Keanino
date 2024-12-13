@@ -91,8 +91,8 @@ export default function CreatePost() {
           className="w-full text-4xl font-bold border-none focus:outline-none placeholder-orange-400 py-4 border-b border-black"
           placeholder="Title"
         />
-        <input type="file"  accept='image/*' onChange={handleImageSubmit}/>
-        {preview && <Image src={preview} alt="Preview" className="preview-image" width={500} height={500} />}
+        {/* <input type="file"  accept='image/*' onChange={handleImageSubmit}/>
+        {preview && <Image src={preview} alt="Preview" className="preview-image" width={500} height={500} />} */}
         
         <Textarea
           value={submitContent}
