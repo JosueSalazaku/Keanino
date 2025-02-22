@@ -20,10 +20,11 @@ export const users = createTable('users', {
 export const posts = createTable('posts', {
   id: uuid('id').primaryKey().defaultRandom(),
   title: text('title').notNull(),
-  userId: text('user_id').notNull().references(() => users.clerkId), // Foreign key references clerkId in users table
+  userId: text('user_id').notNull().references(() => users.clerkId),
   content: text('content').notNull(),
   pictureUrl: text('picture_url'),
   imageUrl: text('image_url'),
+  category: text("category", { enum: ["Plates", "Place", "People"] }).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
 }, (table) => ({
