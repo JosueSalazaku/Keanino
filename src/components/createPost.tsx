@@ -71,13 +71,13 @@ export default function CreatePost() {
     }
   }
 
-  async function handleImageSubmit(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (file) {
-      setImage(file);
-      setPreview(URL.createObjectURL(file));
-    }
-  }
+  // async function handleImageSubmit(event: React.ChangeEvent<HTMLInputElement>) {
+  //   const file = event.target.files?.[0];
+  //   if (file) {
+  //     setImage(file);
+  //     setPreview(URL.createObjectURL(file));
+  //   }
+  // }
 
   return (
     <div className="w-screen flex justify-center mt-8 px-12">
