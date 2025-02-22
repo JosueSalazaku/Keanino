@@ -5,7 +5,6 @@ import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
-import Image from 'next/image';
 
 export default function CreatePost() {
   const searchParams = useSearchParams();
@@ -18,7 +17,6 @@ export default function CreatePost() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [image, setImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
 
   const { user } = useUser(); 
 
