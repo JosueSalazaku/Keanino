@@ -6,6 +6,7 @@ export interface Post {
   username: string,
   pictureUrl: string,
   imageUrl: string,
+  category: "People" | "Places" | "pages";
   createdAt: string,
   updatedAt: string,
 }
