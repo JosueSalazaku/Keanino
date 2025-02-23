@@ -24,7 +24,7 @@ export const posts = createTable('posts', {
   content: text('content').notNull(),
   pictureUrl: text('picture_url'),
   imageUrl: text('image_url'),
-  category: text("category", { enum: ["People", "Places", "Pages"] }).notNull(),
+  category: text("category", { enum: ["People", "Places", "Pages"] }),
   createdAt: timestamp('created_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
 }, (table) => ({

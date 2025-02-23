@@ -1,24 +1,27 @@
 "use client";
-import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
+import SaveCategory from "./SaveCategory";
 
 export default function CreatePost() {
   const searchParams = useSearchParams();
-  const id = searchParams.get('id');
-  const initialTitle = searchParams.get('title');
-  const initialContent = searchParams.get('content');
+  const id = searchParams.get("id");
+  const initialTitle = searchParams.get("title");
+  const initialContent = searchParams.get("content");
 
   const [submitTitle, setSubmitTitle] = useState<string>(initialTitle ?? "");
-  const [submitContent, setSubmitContent] = useState<string>(initialContent ?? "");  
+  const [submitContent, setSubmitContent] = useState<string>(
+    initialContent ?? "",
+  );
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [image, setImage] = useState<File | null>(null);
 
-  const { user } = useUser(); 
+  const { user } = useUser();
 
   async function handlePost(event: React.FormEvent) {
     event.preventDefault();
@@ -29,11 +32,12 @@ export default function CreatePost() {
     }
 
     const formData = new FormData();
-    formData.append('title', submitTitle);
-    formData.append('content', submitContent);
-    formData.append('userId', user.id);
+    formData.append("title", submitTitle);
+    formData.append("content", submitContent);
+    formData.append("userId", user.id);
+    // formData.append("categroy", posts.categroy)
     if (image) {
-      formData.append('image', image); 
+      formData.append("image", image);
     }
 
     try {
@@ -45,13 +49,13 @@ export default function CreatePost() {
       if (id) {
         response = await axios.put(`/api/posts/${id}`, formData, {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         });
       } else {
         response = await axios.post("/api/posts", formData, {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         });
       }
@@ -59,7 +63,7 @@ export default function CreatePost() {
       if (response.status === 200) {
         setSubmitTitle("");
         setSubmitContent("");
-        window.location.href = '/';
+        window.location.href = "/";
       }
     } catch (error) {
       console.error("Error, post not created or updated:", error);
@@ -78,34 +82,35 @@ export default function CreatePost() {
   // }
 
   return (
-    <div className="w-screen flex justify-center mt-8 px-12">
-      <form 
-        onSubmit={handlePost} 
-        className="w-screen h-fit  flex flex-col space-y-6 p-4 bg-white text-black shadow-lg "
+    <div className="mt-8 flex w-screen justify-center px-12">
+      <form
+        onSubmit={handlePost}
+        className="flex h-fit  w-screen flex-col space-y-6 bg-white p-4 text-black shadow-lg "
       >
         <Textarea
           value={submitTitle}
           onChange={(event) => setSubmitTitle(event.target.value)}
-          className="w-full text-4xl font-bold border-none focus:outline-none placeholder-orange-400 py-4 border-b border-black"
+          className="w-full border-b border-none border-black py-4 text-4xl font-bold placeholder-orange-400 focus:outline-none"
           placeholder="Title"
         />
         {/* <input type="file"  accept='image/*' onChange={handleImageSubmit}/>
         {preview && <Image src={preview} alt="Preview" className="preview-image" width={500} height={500} />} */}
-        
+
         <Textarea
           value={submitContent}
           onChange={(event) => setSubmitContent(event.target.value)}
-          className="w-full h-[500px] text-xl leading-relaxed border-none focus:outline-none placeholder-gray-500"
+          className="h-[500px] w-full border-none text-xl leading-relaxed placeholder-gray-500 focus:outline-none"
           placeholder="Write your story..."
         />
         {error && <p className="text-red-500">{error}</p>}
         <Button
           type="submit"
-          className={`w-full md:w-[200px] h-[50px] bg-primary text-white text-xl font-normal rounded-lg ${isSubmitting ? 'opacity-70' : ''}`}
+          className={`h-[50px] w-full rounded-lg bg-primary text-xl font-normal text-white md:w-[200px] ${isSubmitting ? "opacity-70" : ""}`}
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Submitting...' : id ? 'Update Post' : 'Publish'}
+          {isSubmitting ? "Submitting..." : id ? "Update Post" : "Publish"}
         </Button>
+        <SaveCategory />
       </form>
     </div>
   );
