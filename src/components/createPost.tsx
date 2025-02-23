@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { useUser } from "@clerk/nextjs";
@@ -8,7 +8,8 @@ import { addPost } from "~/app/service/routes";
 
 export default function CreatePost() {
   const [title, setTitle] = useState<string>("");
-  const [content, setContent] = useState<string>( "");
+  const [content, setContent] = useState<string>("");
+  const [category, setCategory] = useState<string>("Choose Category")
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [image, setImage] = useState<File | null>(null);
@@ -28,7 +29,7 @@ export default function CreatePost() {
     formData.append("title", title);
     formData.append("content", content);
     formData.append("userId", userId);
-    // formData.append("categroy", posts.categroy)
+    formData.append("categroy", category)
     if (image) {
       formData.append("image", image);
     }
@@ -41,12 +42,13 @@ export default function CreatePost() {
 
     setIsSubmitting(true);
     try {
-      await addPost(title, content, userId)
+      await addPost(title, content, userId, category)
       setError(null);
 
       if (true) {
         setTitle("");
         setContent("");
+        setCategory("Choose Category")
         window.location.href = "/";
       }
     } catch (error) {
@@ -86,7 +88,7 @@ export default function CreatePost() {
         >
           {isSubmitting ? "Submitting..." : "Publish"}
         </Button>
-        <SaveCategory />
+        <SaveCategory category={category} />
       </form>
     </div>
   );

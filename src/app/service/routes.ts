@@ -14,9 +14,9 @@ export const getAllPosts = async () => {
     throw new Error("Could not fetch All posts Please try again.");
   }
 };
-export const addPost = async (title: string, content: string, userId: string) => {
+export const addPost = async (title: string, content: string, userId: string, category: string) => {
   try {
-    const data = { title, content, userId };
+    const data = { title, content, userId, category };
     const response = await axios.post("/api/posts", data, {
         headers: {
             'Content-Type': 'multipart/form-data',

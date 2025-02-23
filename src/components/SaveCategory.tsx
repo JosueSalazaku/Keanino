@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 
-function SaveCategory() {
-    const [category, setCategory] = useState<string>("Category");
+interface SaveCategoryProps {
+  category: string;
+}
 
-    async function handleSavingCategory( postId: string) {
-        //
-    }
-
+export default function SaveCategory({ category }: SaveCategoryProps) {
   return (
     <select value={category}>
       <option>People</option>
@@ -15,5 +13,3 @@ function SaveCategory() {
     </select>
   );
 }
-
-export default SaveCategory;
