@@ -88,7 +88,7 @@ export default function CreatePost() {
         >
           {isSubmitting ? "Submitting..." : "Publish"}
         </Button>
-        <SaveCategory category={category} />
+        <SaveCategory category={category} setCategory={setCategory} />
       </form>
     </div>
   );
