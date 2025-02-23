@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { useUser } from "@clerk/nextjs";
@@ -29,7 +29,7 @@ export default function CreatePost() {
     formData.append("title", title);
     formData.append("content", content);
     formData.append("userId", userId);
-    formData.append("categroy", category)
+    formData.append("category", category)
     if (image) {
       formData.append("image", image);
     }

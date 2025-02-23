@@ -16,12 +16,14 @@ export const getAllPosts = async () => {
 };
 export const addPost = async (title: string, content: string, userId: string, category: string) => {
   try {
-    const data = { title, content, userId, category };
-    const response = await axios.post("/api/posts", data, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        },
-    })
+   
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("userId", userId);
+    formData.append("category", category);
+      
+    const response = await axios.post("/api/posts", formData)
 
       if (response.status === 200 || response.status === 201) {
         console.log("Post added succesfully", response.data);
