@@ -23,10 +23,12 @@ export default function CreatePost() {
 
   const { user } = useUser();
 
+  const userId = user?.id
+
   async function handlePost(event: React.FormEvent) {
     event.preventDefault();
 
-    if (!user?.id) {
+    if (!userId) {
       setError("User not authenticated.");
       return;
     }
@@ -34,7 +36,7 @@ export default function CreatePost() {
     const formData = new FormData();
     formData.append("title", submitTitle);
     formData.append("content", submitContent);
-    formData.append("userId", user.id);
+    formData.append("userId", userId);
     // formData.append("categroy", posts.categroy)
     if (image) {
       formData.append("image", image);
