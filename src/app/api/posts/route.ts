@@ -20,6 +20,7 @@ export async function GET() {
         username: users.username,
         pictureUrl: users.pictureUrl,
         imageUrl: posts.imageUrl,
+        category: posts.category,
         createdAt: posts.createdAt,
         updatedAt: posts.updatedAt,
       })
@@ -39,6 +40,7 @@ export async function POST(req: NextRequest) {
     const title = formData.get('title') as string;
     const content = formData.get('content') as string;
     const userId = formData.get('userId') as string;
+    const category = formData.get('category') as string
 
     // Check if required fields are present
     if (!title || !content || !userId) {
@@ -51,6 +53,7 @@ export async function POST(req: NextRequest) {
       title,
       content,
       userId,
+      category,
       imageUrl: '', // Skip image logic, default to empty string
     }).returning();
 
