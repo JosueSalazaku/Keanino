@@ -9,7 +9,7 @@ import { addPost } from "~/app/service/routes";
 export default function CreatePost() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
-  const [category, setCategory] = useState<string>("Choose Category")
+  const [category, setCategory] = useState<string>("")
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [image, setImage] = useState<File | null>(null);
