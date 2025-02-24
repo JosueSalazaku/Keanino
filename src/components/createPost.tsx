@@ -12,7 +12,6 @@ export default function CreatePost() {
   const [category, setCategory] = useState<string>("")
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [image, setImage] = useState<File | null>(null);
 
   const { user } = useUser();
   const userId = user?.id
@@ -30,9 +29,6 @@ export default function CreatePost() {
     formData.append("content", content);
     formData.append("userId", userId);
     formData.append("category", category)
-    if (image) {
-      formData.append("image", image);
-    }
 
     if (!title || !content || !userId) {
       setError("Missing required fields");
@@ -71,8 +67,6 @@ export default function CreatePost() {
           className="w-full border-b border-none border-black py-4 text-4xl font-bold placeholder-orange-400 focus:outline-none"
           placeholder="Title"
         />
-        {/* <input type="file"  accept='image/*' onChange={handleImageSubmit}/>
-        {preview && <Image src={preview} alt="Preview" className="preview-image" width={500} height={500} />} */}
 
         <Textarea
           value={content}
